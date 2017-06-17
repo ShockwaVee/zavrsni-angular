@@ -1,0 +1,15 @@
+nav.navbar{
+	background: #9b59b6;
+	border-radius: 0px;
+	border: none;
+}
+
+nav.navbar a{
+	color: #30343f;
+	transition: color 200ms ease-out;
+}
+
+nav.navbar a:hover{
+	color: #ffffff;
+}
+
