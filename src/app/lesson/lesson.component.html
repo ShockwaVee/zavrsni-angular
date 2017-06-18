@@ -8,6 +8,15 @@
                 <button class="btn btn-primary" (click)="onQuizActivate()">Switch</button>
             </div>
             <ng-template #quiz>
+                <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+                    <p>{{current_question.question}}</p>
+                    <div class="answers form-group" *ngFor="let answer of current_question.possible_answers; let i = index">
+                        <label class="radio-inline">
+                            <input ngModel type="radio" name="inlineRadioOptions" value="{{answer}}" required> {{answer}}
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Next</button>
+                </form>
             </ng-template>
         </div>
     </div>
