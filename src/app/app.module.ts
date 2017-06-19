@@ -7,12 +7,19 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { LessonComponent } from './lesson/lesson.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LessonListComponent } from './lesson-list/lesson-list.component';
+import { LessonService } from './lesson.service';
+import { LessonStartComponent } from './lesson-start/lesson-start.component';
+import { LessonListItemComponent } from './lesson-list/lesson-list-item/lesson-list-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    LessonComponent
+    LessonComponent,
+    LessonListComponent,
+    LessonStartComponent,
+    LessonListItemComponent
   ],
   imports: [
     BrowserModule,
@@ -20,7 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [LessonService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,23 +1,21 @@
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-            <div *ngIf="!quiz_mode;else quiz" id="lesson">
-                <p>
-                    {{lesson.lesson_text}}
-                </p>
-                <button class="btn btn-primary" (click)="onQuizActivate()">Switch</button>
-            </div>
-            <ng-template #quiz>
-                <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-                    <p>{{current_question.question}}</p>
-                    <div class="answers form-group" *ngFor="let answer of current_question.possible_answers; let i = index">
-                        <label class="radio-inline">
-                            <input ngModel type="radio" name="inlineRadioOptions" value="{{answer}}" required> {{answer}}
-                        </label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Next</button>
-                </form>
-            </ng-template>
+<div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8">
+        <div *ngIf="!quiz_mode;else quiz" id="lesson">
+            <p>
+                {{current_lesson.lesson_text}}
+            </p>
+            <button class="btn btn-primary" (click)="onQuizActivate()">Switch</button>
         </div>
+        <ng-template #quiz>
+            <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+                <p>{{current_question.question}}</p>
+                <div class="answers form-group" *ngFor="let answer of current_question.possible_answers; let i = index">
+                    <label class="radio-inline">
+                        <input ngModel type="radio" name="inlineRadioOptions" value="{{answer}}" required> {{answer}}
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Next</button>
+            </form>
+        </ng-template>
     </div>
 </div>
