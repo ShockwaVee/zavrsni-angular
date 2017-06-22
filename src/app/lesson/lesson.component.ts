@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {Subject} from "rxjs/Subject";
 import {Subscription} from "rxjs/Subscription";
@@ -13,10 +13,11 @@ import {LessonService} from '../lesson.service';
   templateUrl: "./lesson.component.html",
   styleUrls: ["./lesson.component.css"]
 })
-export class LessonComponent implements OnInit {
+export class LessonComponent implements OnInit, OnDestroy {
   quiz_mode = false;
   question_changed = new Subject<Question>();
-  subscription = new Subscription();
+  subscription_question = new Subscription();
+  subscription_lesson = new Subscription();
   index: number;
   current_lesson: Lesson;
   current_question: Question;
@@ -26,12 +27,12 @@ export class LessonComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.subscription = this.question_changed.subscribe(
+    this.subscription_question = this.question_changed.subscribe(
       (question: Question) => {
         this.current_question = question;
       }
     );
-    this.route.params.subscribe((params: Params) => {
+    this.subscription_lesson = this.route.params.subscribe((params: Params) => {
       this.current_lesson = this.lessonService.getLesson(params['name']);
       this.quiz_mode = false;
       this.index = 0;
@@ -61,5 +62,10 @@ export class LessonComponent implements OnInit {
     else {
       this.incorrect = true;
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription_question.unsubscribe();
+    this.subscription_lesson.unsubscribe();
   }
 }
