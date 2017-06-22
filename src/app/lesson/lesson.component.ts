@@ -1,12 +1,12 @@
-import { Component, OnInit } from "@angular/core";
-import { NgForm } from "@angular/forms";
-import { Subject } from "rxjs/Subject";
-import { Subscription } from "rxjs/Subscription";
-import { ActivatedRoute, Params } from '@angular/router';
+import {Component, OnInit} from "@angular/core";
+import {NgForm} from "@angular/forms";
+import {Subject} from "rxjs/Subject";
+import {Subscription} from "rxjs/Subscription";
+import {ActivatedRoute, Params} from '@angular/router';
 
-import { Lesson } from "./lesson.model";
-import { Question } from "./question.model";
-import { LessonService } from '../lesson.service';
+import {Lesson} from "./lesson.model";
+import {Question} from "./question.model";
+import {LessonService} from '../lesson.service';
 
 @Component({
   selector: "app-lesson",
@@ -20,8 +20,10 @@ export class LessonComponent implements OnInit {
   index: number;
   current_lesson: Lesson;
   current_question: Question;
+  incorrect: boolean = false;
 
-  constructor(private lessonService: LessonService, private route: ActivatedRoute) {}
+  constructor(private lessonService: LessonService, private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.subscription = this.question_changed.subscribe(
@@ -31,6 +33,9 @@ export class LessonComponent implements OnInit {
     );
     this.route.params.subscribe((params: Params) => {
       this.current_lesson = this.lessonService.getLesson(params['name']);
+      this.quiz_mode = false;
+      this.index = 0;
+      this.question_changed.next(this.current_lesson.questions[this.index]);
     });
     this.index = 0;
     this.current_question = this.current_lesson.questions[0];
@@ -41,13 +46,20 @@ export class LessonComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (this.index != this.current_lesson.questions.length - 1) {
-      this.index++;
-      this.question_changed.next(this.current_lesson.questions[this.index]);
-    } else {
-      this.quiz_mode = false;
-      this.index = 0;
-      this.question_changed.next(this.current_lesson.questions[this.index]);
+    const value = form.value;
+    if (value.question === this.current_question.correct_answer) {
+      this.incorrect = false;
+      if (this.index != this.current_lesson.questions.length - 1) {
+        this.index++;
+        this.question_changed.next(this.current_lesson.questions[this.index]);
+      } else {
+        this.quiz_mode = false;
+        this.index = 0;
+        this.question_changed.next(this.current_lesson.questions[this.index]);
+      }
+    }
+    else {
+      this.incorrect = true;
     }
   }
 }

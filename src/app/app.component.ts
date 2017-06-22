@@ -23,6 +23,18 @@ export class AppComponent implements OnInit {
 			"odgovor1"
 		)
 	];
+  questions1: Question[] = [
+    new Question(
+      "Trece pitanje?",
+      ["odgovor1", "odgovor2", "odgovor3", "odgovor4"],
+      "odgovor3"
+    ),
+    new Question(
+      "Cetvrto pitanje?",
+      ["odgovor1", "odgovor2", "odgovor3", "odgovor4"],
+      "odgovor1"
+    )
+  ];
 
 	initializeLessonList() {
 		this.lessonService.setLessonList([
@@ -44,7 +56,7 @@ export class AppComponent implements OnInit {
 				"Treci",
 				"Opis treceg lessona",
 				"nema random sranja",
-				this.questions,
+				this.questions1,
 				"vocabulary"
 			),
 			new Lesson(
