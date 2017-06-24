@@ -11,6 +11,8 @@ import { LessonListComponent } from './lesson-list/lesson-list.component';
 import { LessonService } from './lesson.service';
 import { LessonStartComponent } from './lesson-start/lesson-start.component';
 import { LessonListItemComponent } from './lesson-list/lesson-list-item/lesson-list-item.component';
+import {UserService} from "./user/user.service";
+import {ProgressService} from "./lesson/progress.service";
 
 @NgModule({
   declarations: [
@@ -27,7 +29,7 @@ import { LessonListItemComponent } from './lesson-list/lesson-list-item/lesson-l
     HttpModule,
     AppRoutingModule
   ],
-  providers: [LessonService],
+  providers: [LessonService, UserService, ProgressService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

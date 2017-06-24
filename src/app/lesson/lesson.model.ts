@@ -6,6 +6,7 @@ export class Lesson{
 	public lesson_text: string;
 	public questions: Question[];
 	public type: string;
+	public passed: boolean = false;
 
 	constructor(name, description, text, questions, type){
 		this.name = name;

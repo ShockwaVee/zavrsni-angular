@@ -1,0 +1,7 @@
+.inactive{
+  background: #e6e6e6;
+  cursor: default;
+}
+.inactive:hover{
+  background: #e6e6e6;
+}
