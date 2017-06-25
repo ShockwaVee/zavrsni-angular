@@ -21,7 +21,7 @@ export class LessonListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe((params: Params) => {
-      let re = new RegExp("vocabulary|grammar|punctuation");
+      let re = new RegExp("vokabular|gramatika|interpunkcija");
       if (re.test(params['type'])) {
         this.lessonList = this.lessonService.getLessonList(params['type'])
       }

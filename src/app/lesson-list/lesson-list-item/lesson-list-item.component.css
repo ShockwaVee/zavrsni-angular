@@ -5,3 +5,18 @@
 .inactive:hover{
   background: #e6e6e6;
 }
+
+a{
+  border-radius: 0px!important;
+}
+
+span{
+  font-size: 36px;
+  padding-right: 12px;
+  border-right: 1px solid black;
+}
+
+.lesson-info{
+  margin-top: 5px;
+  margin-left: 12px;
+}

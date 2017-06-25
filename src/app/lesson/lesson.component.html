@@ -1,25 +1,33 @@
 <div class="row">
-  <div class="col-xs-12 col-sm-10 col-md-8">
-    <div *ngIf="state==='finished'">
-      <img src="assets/congrats.gif" alt="">
-    </div>
+  <div class="col-md-128 center-block">
     <div *ngIf="state==='lesson'" id="lesson">
-      <p>
+      <h1 class="text-center">{{current_lesson.name}}</h1>
+      <p class="text-center">
         {{current_lesson.lesson_text}}
       </p>
-      <button class="btn btn-primary" (click)="onQuizActivate()">Switch</button>
+      <button class="btn btn-primary" (click)="onQuizActivate()">započni kviz</button>
     </div>
     <div *ngIf="state==='quiz'">
-      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-        <p>{{current_question.question}}</p>
-        <span *ngIf="incorrect" class="help-block">Odgovor je netočan, pokušajte ponovo!</span>
-        <div class="answers form-group" *ngFor="let answer of current_question.possible_answers; let i = index">
+      <form class="center-block" (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <p class="text-center">{{current_question.question}}</p>
+        <span *ngIf="incorrect" class="help-block text-center">Odgovor je netočan, pokušajte ponovo!</span>
+        <div class="answers text-center form-group"
+             *ngFor="let answer of current_question.possible_answers; let i = index">
           <label class="radio-inline">
             <input ngModel type="radio" name="question" value="{{answer}}" required> {{answer}}
           </label>
         </div>
-        <button [disabled]="!f.valid" type="submit" class="btn btn-primary">Next</button>
+        <button [disabled]="!f.valid" type="submit" *ngIf="index != current_lesson.questions.length - 1"
+                class="btn btn-primary">sljedeće pitanje
+        </button>
+        <button [disabled]="!f.valid" type="submit" *ngIf="index == current_lesson.questions.length - 1"
+                class="btn btn-primary">kraj
+        </button>
       </form>
+    </div>
+    <div *ngIf="state==='finished'">
+      <img class="center-block" src="assets/congrats.gif" alt="">
+      <button class="btn btn-primary" (click)="onNextLesson()">sljedeća lekcija</button>
     </div>
   </div>
 </div>

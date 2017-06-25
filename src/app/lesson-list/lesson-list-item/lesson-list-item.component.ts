@@ -10,6 +10,7 @@ import { Lesson } from "../../lesson/lesson.model";
 export class LessonListItemComponent implements OnInit {
 	@Input() name: string;
 	@Input() lesson: Lesson;
+	@Input() index: number;
 
 	constructor() {}
 

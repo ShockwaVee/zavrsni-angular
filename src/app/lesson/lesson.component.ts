@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {Subject} from "rxjs/Subject";
 import {Subscription} from "rxjs/Subscription";
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 import {Lesson} from "./lesson.model";
 import {Question} from "./question.model";
@@ -25,7 +25,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   next_lesson: Lesson;
   incorrect: boolean = false;
 
-  constructor(private lessonService: LessonService, private userService: UserService, private route: ActivatedRoute) {
+  constructor(private lessonService: LessonService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
@@ -48,6 +48,10 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   onQuizActivate() {
     this.state = 'quiz';
+  }
+
+  onNextLesson(){
+    this.router.navigate([this.route.parent.snapshot.params.type, this.next_lesson.name]);
   }
 
   onSubmit(form: NgForm) {

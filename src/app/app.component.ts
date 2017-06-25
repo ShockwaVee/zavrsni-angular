@@ -49,63 +49,63 @@ export class AppComponent implements OnInit {
         "Opis prvog lessona",
         "Ovo je neki testni tekst lessona",
         this.questions,
-        "vocabulary"
+        "vokabular"
       ),
       new Lesson(
         "Drugi",
         "Opis drugi lessona",
         "nema random sranja",
         this.questions,
-        "grammar"
+        "gramatika"
       ),
       new Lesson(
         "Treci",
         "Opis treceg lessona",
         "nema random sranja",
         this.questions1,
-        "vocabulary"
+        "vokabular"
       ),
       new Lesson(
         "Cetvrti",
         "Opis cetvrtog lessona",
         "nema random sranja",
         this.questions,
-        "punctuation"
+        "interpunkcija"
       ),
       new Lesson(
         "Peti",
         "Opis petog lessona",
         "nema random sranja",
         this.questions,
-        "grammar"
+        "gramatika"
       ),
       new Lesson(
         "Sesti",
         "Opis sestog lessona",
         "nema random sranja",
         this.questions,
-        "grammar"
+        "gramatika"
       ),
       new Lesson(
         "Sedmi",
         "Opis sedmog lessona",
         "nema random sranja",
         this.questions,
-        "vocabulary"
+        "vokabular"
       ),
       new Lesson(
         "Osmi",
         "Opis osmog lessona",
         "nema random sranja",
         this.questions,
-        "punctuation"
+        "interpunkcija"
       ),
       new Lesson(
         "Deveti",
         "Opis devetog lessona",
         "nema random sranja",
         this.questions,
-        "vocabulary"
+        "vokabular"
       )
     ]);
   }
@@ -118,6 +118,12 @@ export class AppComponent implements OnInit {
     u biti ne, ako je vec ulogiran onda kurac
     u lesson listu mora bit inicijalizacija jer se bude to uvijek loadalo
     ako nis, if ovo nije prazno, onda napuni lesson list cijeli
+     */
+
+    /*
+    dodat neki lesson html pa videt jel bude to delalo as intended, bar za prvu samo, ako nis
+    doradit boje i ostalo kaj treba, layout za sad oke (animacije i to bude trebalo resit, al to zadnje)
+    napravit da vuce i salje sranja na bazu jer yolo
      */
   }
 }

@@ -1,12 +1,19 @@
-<a class="list-group-item clearfix" style="cursor: pointer;" *ngIf="lesson.available" [routerLink]="[lesson.name]" routerLinkActive="active">
-    <div class="pull-left">
-        <h4 class="list-group-item-heading">{{ lesson.name }}</h4>
-        <p class="list-group-item-text">{{ lesson.description }}</p>
+<a class="list-group-item clearfix" style="cursor: pointer;" *ngIf="lesson.available" [routerLink]="[lesson.name]"
+   routerLinkActive="active">
+  <div class="pull-left">
+    <span>{{index+1}}</span>
+    <div class="pull-right lesson-info">
+      <h4 class="list-group-item-heading">{{ lesson.name }}</h4>
+      <p class="list-group-item-text">{{ lesson.description }}</p>
     </div>
+  </div>
 </a>
 <a class="list-group-item clearfix inactive" *ngIf="!lesson.available">
   <div class="pull-left">
-    <h4 class="list-group-item-heading">{{ lesson.name }}</h4>
-    <p class="list-group-item-text">{{ lesson.description }}</p>
+    <span>{{index+1}}</span>
+    <div class="pull-right lesson-info">
+      <h4 class="list-group-item-heading">{{ lesson.name }}</h4>
+      <p class="list-group-item-text">{{ lesson.description }}</p>
+    </div>
   </div>
 </a>
