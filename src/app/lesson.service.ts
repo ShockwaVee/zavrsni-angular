@@ -29,15 +29,9 @@ export class LessonService {
 
   setLessonList(list: Lesson[]) {
     this.lessonList = list;
-    if (this.userService.current_user.available_lessons.length === 0) {
-      this.userService.current_user.available_lessons = ['Prvi', 'Drugi', 'Cetvrti'];
-      this.getLesson('Prvi').available = true;
-      this.getLesson('Drugi').available = true;
-      this.getLesson('Cetvrti').available = true;
-    } else {
-      this.lessonList.forEach((lesson) => {
-        if (this.userService.current_user.available_lessons.indexOf(lesson.name) != -1) lesson.available = true;
-      });
-    }
+    this.lessonList.forEach((lesson) => {
+      if (this.userService.current_user.getAvailableLessons().indexOf(lesson.name) != -1) lesson.available = true;
+    });
+
   }
 }

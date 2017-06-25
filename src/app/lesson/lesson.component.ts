@@ -36,7 +36,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     );
     this.subscription_lesson = this.route.params.subscribe((params: Params) => {
       this.current_lesson = this.lessonService.getLesson(params['name']);
-      this.next_lesson = this.lessonService.currentLessonList[this.lessonService.currentLessonList.indexOf(this.current_lesson)+1];
+      this.next_lesson = this.lessonService.currentLessonList[this.lessonService.currentLessonList.indexOf(this.current_lesson) + 1];
       this.state = 'lesson';
       this.index = 0;
       this.question_changed.next(this.current_lesson.questions[this.index]);
@@ -59,7 +59,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.question_changed.next(this.current_lesson.questions[this.index]);
       } else {
         this.state = 'finished';
-        this.userService.current_user.available_lessons.push(this.next_lesson.name);
+        this.userService.current_user.setLesson(this.next_lesson.name);
         this.lessonService.getLesson(this.next_lesson.name).available = true;
         this.index = 0;
 
