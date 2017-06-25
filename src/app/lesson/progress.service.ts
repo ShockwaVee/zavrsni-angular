@@ -8,7 +8,7 @@ export class ProgressService {
   constructor(private userService: UserService, private route: ActivatedRoute) { }
 
   canAccess(param: string){
-    if(this.userService.current_user.passed_lessons.indexOf(param) != -1) return true;
+    if(this.userService.current_user.available_lessons.indexOf(param) != -1) return true;
     else return false;
   }
 

@@ -1,12 +1,15 @@
 <div class="row">
   <div class="col-xs-12 col-sm-10 col-md-8">
-    <div *ngIf="!quiz_mode;else quiz" id="lesson">
+    <div *ngIf="state==='finished'">
+      <img src="assets/congrats.gif" alt="">
+    </div>
+    <div *ngIf="state==='lesson'" id="lesson">
       <p>
         {{current_lesson.lesson_text}}
       </p>
       <button class="btn btn-primary" (click)="onQuizActivate()">Switch</button>
     </div>
-    <ng-template #quiz>
+    <div *ngIf="state==='quiz'">
       <form (ngSubmit)="onSubmit(f)" #f="ngForm">
         <p>{{current_question.question}}</p>
         <span *ngIf="incorrect" class="help-block">Odgovor je netočan, pokušajte ponovo!</span>
@@ -17,6 +20,6 @@
         </div>
         <button [disabled]="!f.valid" type="submit" class="btn btn-primary">Next</button>
       </form>
-    </ng-template>
+    </div>
   </div>
 </div>

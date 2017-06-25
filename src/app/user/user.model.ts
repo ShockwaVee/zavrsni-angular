@@ -1,12 +1,12 @@
 export class User {
   public name: string;
   public challenge_points: number;
-  public passed_lessons: Array<string>;
+  public available_lessons: Array<string>;
 
 
-  constructor(name, passed_lessons) {
+  constructor(name, available_lessons) {
     this.name = name;
-    this.passed_lessons = passed_lessons;
+    this.available_lessons = available_lessons;
   }
 
 }

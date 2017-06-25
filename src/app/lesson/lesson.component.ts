@@ -7,6 +7,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {Lesson} from "./lesson.model";
 import {Question} from "./question.model";
 import {LessonService} from '../lesson.service';
+import {UserService} from "../user/user.service";
 
 @Component({
   selector: "app-lesson",
@@ -14,16 +15,17 @@ import {LessonService} from '../lesson.service';
   styleUrls: ["./lesson.component.css"]
 })
 export class LessonComponent implements OnInit, OnDestroy {
-  quiz_mode = false;
+  state: string = 'lesson';
   question_changed = new Subject<Question>();
   subscription_question = new Subscription();
   subscription_lesson = new Subscription();
   index: number;
   current_lesson: Lesson;
   current_question: Question;
+  next_lesson: Lesson;
   incorrect: boolean = false;
 
-  constructor(private lessonService: LessonService, private route: ActivatedRoute) {
+  constructor(private lessonService: LessonService, private userService: UserService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -34,16 +36,18 @@ export class LessonComponent implements OnInit, OnDestroy {
     );
     this.subscription_lesson = this.route.params.subscribe((params: Params) => {
       this.current_lesson = this.lessonService.getLesson(params['name']);
-      this.quiz_mode = false;
+      this.next_lesson = this.lessonService.currentLessonList[this.lessonService.currentLessonList.indexOf(this.current_lesson)+1];
+      this.state = 'lesson';
       this.index = 0;
       this.question_changed.next(this.current_lesson.questions[this.index]);
     });
+    this.state = 'lesson';
     this.index = 0;
     this.current_question = this.current_lesson.questions[0];
   }
 
   onQuizActivate() {
-    this.quiz_mode = true;
+    this.state = 'quiz';
   }
 
   onSubmit(form: NgForm) {
@@ -54,9 +58,11 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.index++;
         this.question_changed.next(this.current_lesson.questions[this.index]);
       } else {
-        this.quiz_mode = false;
+        this.state = 'finished';
+        this.userService.current_user.available_lessons.push(this.next_lesson.name);
+        this.lessonService.getLesson(this.next_lesson.name).available = true;
         this.index = 0;
-        this.question_changed.next(this.current_lesson.questions[this.index]);
+
       }
     }
     else {

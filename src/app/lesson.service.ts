@@ -9,13 +9,14 @@ export class LessonService {
   }
 
   private lessonList: Lesson[];
+  public currentLessonList;
 
   getLessonList(type: string) {
-    let lessons: Lesson[] = new Array<Lesson>();
+    this.currentLessonList = new Array<Lesson>();
     this.lessonList.forEach(lesson => {
-      if (lesson.type === type) lessons.push(lesson);
+      if (lesson.type === type) this.currentLessonList.push(lesson);
     });
-    return lessons;
+    return this.currentLessonList;
   }
 
   getLesson(name: string) {
@@ -28,11 +29,14 @@ export class LessonService {
 
   setLessonList(list: Lesson[]) {
     this.lessonList = list;
-    if (this.userService.current_user.passed_lessons.length === 0) {
-      this.getLesson('Prvi').passed = true;
+    if (this.userService.current_user.available_lessons.length === 0) {
+      this.userService.current_user.available_lessons = ['Prvi', 'Drugi', 'Cetvrti'];
+      this.getLesson('Prvi').available = true;
+      this.getLesson('Drugi').available = true;
+      this.getLesson('Cetvrti').available = true;
     } else {
       this.lessonList.forEach((lesson) => {
-        if (this.userService.current_user.passed_lessons.indexOf(lesson.name) != -1) lesson.passed = true;
+        if (this.userService.current_user.available_lessons.indexOf(lesson.name) != -1) lesson.available = true;
       });
     }
   }

@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     )
   ];
 
-  user: User = new User('Marko', ['Prvi', 'Drugi', 'Cetvrti']);
+  user: User = new User('Marko', []);
 
   initializeLessonList() {
     this.lessonService.setLessonList([
@@ -78,6 +78,34 @@ export class AppComponent implements OnInit {
         "nema random sranja",
         this.questions,
         "grammar"
+      ),
+      new Lesson(
+        "Sesti",
+        "Opis sestog lessona",
+        "nema random sranja",
+        this.questions,
+        "grammar"
+      ),
+      new Lesson(
+        "Sedmi",
+        "Opis sedmog lessona",
+        "nema random sranja",
+        this.questions,
+        "vocabulary"
+      ),
+      new Lesson(
+        "Osmi",
+        "Opis osmog lessona",
+        "nema random sranja",
+        this.questions,
+        "punctuation"
+      ),
+      new Lesson(
+        "Deveti",
+        "Opis devetog lessona",
+        "nema random sranja",
+        this.questions,
+        "vocabulary"
       )
     ]);
   }
