@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
       new Lesson(
         "Prvi",
         "Opis prvog lessona",
-        "Ovo je neki testni tekst lessona",
+        "<div class='col-xs-12'><p class='text-center'> This is a <b>lesson</b> </p></div>",
         this.questions,
         "vokabular"
       ),

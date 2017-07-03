@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {Subject} from "rxjs/Subject";
 import {Subscription} from "rxjs/Subscription";
@@ -25,6 +25,8 @@ export class LessonComponent implements OnInit, OnDestroy {
   next_lesson: Lesson;
   incorrect: boolean = false;
 
+  @ViewChild('lesson_text') div_text: ElementRef;
+
   constructor(private lessonService: LessonService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
   }
 
@@ -38,10 +40,12 @@ export class LessonComponent implements OnInit, OnDestroy {
       this.current_lesson = this.lessonService.getLesson(params['name']);
       this.next_lesson = this.lessonService.currentLessonList[this.lessonService.currentLessonList.indexOf(this.current_lesson) + 1];
       this.state = 'lesson';
+      this.div_text.nativeElement.innerHTML = this.current_lesson.lesson_text;
       this.index = 0;
       this.question_changed.next(this.current_lesson.questions[this.index]);
     });
     this.state = 'lesson';
+    this.div_text.nativeElement.innerHTML = this.current_lesson.lesson_text;
     this.index = 0;
     this.current_question = this.current_lesson.questions[0];
   }
@@ -72,6 +76,15 @@ export class LessonComponent implements OnInit, OnDestroy {
     else {
       this.incorrect = true;
     }
+  }
+
+  onSay(){
+    let speech = new SpeechSynthesisUtterance('jeg spraker norsk');
+    speechSynthesis.getVoices().forEach((e) => {
+      if (e.name == 'norwegian') speech.voice = e;
+    });
+    speechSynthesis.speak(speech);
+
   }
 
   ngOnDestroy() {

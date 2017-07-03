@@ -1,10 +1,9 @@
 <div class="row">
-  <div class="col-md-128 center-block">
-    <div *ngIf="state==='lesson'" id="lesson">
+  <div class="col-md-12 center-block">
+    <div [hidden]="state!='lesson'" id="lesson">
       <h1 class="text-center">{{current_lesson.name}}</h1>
-      <p class="text-center">
-        {{current_lesson.lesson_text}}
-      </p>
+      <div #lesson_text></div>
+      <button (click)="onSay()" class="btn btn-primary">reci</button>
       <button class="btn btn-primary" (click)="onQuizActivate()">započni kviz</button>
     </div>
     <div *ngIf="state==='quiz'">
