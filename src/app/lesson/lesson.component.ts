@@ -79,11 +79,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   }
 
   onSay(){
-    let speech = new SpeechSynthesisUtterance('jeg spraker norsk');
-    speechSynthesis.getVoices().forEach((e) => {
-      if (e.name == 'norwegian') speech.voice = e;
-    });
-    speechSynthesis.speak(speech);
+    (<any>window).responsiveVoice.speak("Jeg elsker eple. Kyelling et dyr", "Norwegian Female");
 
   }
 
