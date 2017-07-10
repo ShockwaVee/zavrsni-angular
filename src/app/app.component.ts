@@ -157,5 +157,9 @@ export class AppComponent implements OnInit {
     doradit boje i ostalo kaj treba, layout za sad oke (animacije i to bude trebalo resit, al to zadnje)
     napravit da vuce i salje sranja na bazu jer yolo
      */
+
+    /*memory i neka vrsta hangmana je u bookmarku
+    jos treba slozit nekaj kao da ti pokaze sliku i ti napises nekaj pa kao, to je to
+    nakon tih svih, uredit sve malo da izgleda vise interaktivno i denja*/
   }
 }

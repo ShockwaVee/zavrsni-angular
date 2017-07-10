@@ -13,6 +13,7 @@ import { LessonStartComponent } from './lesson-start/lesson-start.component';
 import { LessonListItemComponent } from './lesson-list/lesson-list-item/lesson-list-item.component';
 import {UserService} from "./user/user.service";
 import {ProgressService} from "./lesson/progress.service";
+import {CapitalizePipe} from "./capitalize.pipe";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {ProgressService} from "./lesson/progress.service";
     LessonComponent,
     LessonListComponent,
     LessonStartComponent,
-    LessonListItemComponent
+    LessonListItemComponent,
+    CapitalizePipe
   ],
   imports: [
     BrowserModule,

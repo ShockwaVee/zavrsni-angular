@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-12 center-block">
     <div [hidden]="state!='lesson'" id="lesson">
-      <h1 class="text-center">{{current_lesson.name}}</h1>
+      <h1 class="text-center">{{current_lesson.name | capitalize}}</h1>
       <div #lesson_text></div>
       <button class="btn btn-primary" (click)="onQuizActivate()">započni kviz</button>
     </div>
