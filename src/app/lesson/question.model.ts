@@ -1,11 +1,15 @@
 export class Question{
-	public question: string;
-	public possible_answers: Array<string>;
+	public question: string
+  public type: string;
+	public answers: Array<string>;
 	public correct_answer: string;
 
-	constructor(question, possible_answers, correct_answer){
+	constructor(question, type, correct_answer,  answers?){
 		this.question = question;
-		this. possible_answers = possible_answers;
-		this.correct_answer = correct_answer;
+		this.type = type;
+    this.correct_answer = correct_answer;
+		if (type === 'radio'){
+		  this.answers = answers
+    }
 	}
 }

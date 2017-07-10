@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import { Component, ViewChild, OnDestroy, OnInit, Renderer2} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {Subject} from "rxjs/Subject";
 import {Subscription} from "rxjs/Subscription";
@@ -24,10 +24,12 @@ export class LessonComponent implements OnInit, OnDestroy {
   current_question: Question;
   next_lesson: Lesson;
   incorrect: boolean = false;
+  keyPress: boolean = false;
 
-  @ViewChild('lesson_text') div_text: ElementRef;
+  @ViewChild('lesson_text') div_text;
+  @ViewChild('input_answer') input;
 
-  constructor(private lessonService: LessonService, private userService: UserService, private route: ActivatedRoute, private router: Router) {
+  constructor(private lessonService: LessonService, private userService: UserService, private route: ActivatedRoute, private router: Router, private renderer: Renderer2) {
   }
 
   ngOnInit() {
@@ -39,13 +41,11 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.subscription_lesson = this.route.params.subscribe((params: Params) => {
       this.current_lesson = this.lessonService.getLesson(params['name']);
       this.next_lesson = this.lessonService.currentLessonList[this.lessonService.currentLessonList.indexOf(this.current_lesson) + 1];
-      this.state = 'lesson';
-      this.div_text.nativeElement.innerHTML = this.current_lesson.lesson_text;
+      this.setLessonText();
       this.index = 0;
       this.question_changed.next(this.current_lesson.questions[this.index]);
     });
-    this.state = 'lesson';
-    this.div_text.nativeElement.innerHTML = this.current_lesson.lesson_text;
+    this.setLessonText();
     this.index = 0;
     this.current_question = this.current_lesson.questions[0];
   }
@@ -60,17 +60,14 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    if (value.question === this.current_question.correct_answer) {
+    let re = new RegExp(this.current_question.correct_answer);
+    if (re.test(value.question.trim().toLowerCase())) {
       this.incorrect = false;
       if (this.index != this.current_lesson.questions.length - 1) {
         this.index++;
         this.question_changed.next(this.current_lesson.questions[this.index]);
       } else {
-        this.state = 'finished';
-        this.userService.current_user.setLesson(this.next_lesson.name);
-        this.lessonService.getLesson(this.next_lesson.name).available = true;
-        this.index = 0;
-
+        this.finishedQuiz();
       }
     }
     else {
@@ -78,10 +75,27 @@ export class LessonComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSay(){
-    (<any>window).responsiveVoice.speak("Jeg elsker eple. Kyelling et dyr", "Norwegian Female");
-
+  setLessonText(){
+    this.state = 'lesson';
+    this.div_text.nativeElement.innerHTML = this.current_lesson.lesson_text;
+    let words = document.querySelectorAll('.pronounce');
+    Array.from(words).forEach((e) => {
+      this.renderer.listen(e, 'click', (event)=>{(<any>window).responsiveVoice.speak(e.innerHTML, "Norwegian Female")});
+    });
   }
+
+  onEnterKey(letter: string, form: NgForm){
+    this.input.nativeElement.value += letter;
+    form.controls['question'].patchValue(this.input.nativeElement.value);
+  }
+
+  finishedQuiz(){
+    this.state = 'finished';
+    this.userService.current_user.setLesson(this.next_lesson.name);
+    this.lessonService.getLesson(this.next_lesson.name).available = true;
+    this.index = 0;
+  }
+
 
   ngOnDestroy() {
     this.subscription_question.unsubscribe();

@@ -17,24 +17,33 @@ export class AppComponent implements OnInit {
 
   questions: Question[] = [
     new Question(
-      "Prvo pitanje?",
-      ["odgovor1", "odgovor2", "odgovor3", "odgovor4"],
-      "odgovor3"
+      "U koju skupinu slova spadaju slova Æ, Ø i Å?",
+      "radio",
+      "samoglasnici",
+      ["Samoglasnici", "Suglasnici", "Niti jednu od navedenih"],
     ),
     new Question(
-      "Drugo pitanje?",
-      ["odgovor1", "odgovor2", "odgovor3", "odgovor4"],
-      "odgovor1"
-    )
+      "Koju varijantu norveškog jezika ćemo učiti?",
+      "radio",
+      "bokmål",
+      ["Riksmål", "Nynorsk", "Bokmål", "Neunorsk"]
+    ),
+    new Question(
+      "Navedi jedan novi glas koji se pojavljuje u norveškom.",
+      "input",
+      "^[åøæ]{1}$"
+    ),
   ];
   questions1: Question[] = [
     new Question(
       "Trece pitanje?",
+      "radio",
       ["odgovor1", "odgovor2", "odgovor3", "odgovor4"],
       "odgovor3"
     ),
     new Question(
       "Cetvrto pitanje?",
+      "radio",
       ["odgovor1", "odgovor2", "odgovor3", "odgovor4"],
       "odgovor1"
     )
@@ -45,11 +54,34 @@ export class AppComponent implements OnInit {
   initializeLessonList() {
     this.lessonService.setLessonList([
       new Lesson(
-        "Prvi",
-        "Opis prvog lessona",
-        "<div class='col-xs-12'><p class='text-center'> This is a <b>lesson</b> </p></div>",
+        "izgovor",
+        "Nauči kako izgovarati norveška slova",
+        `<div class='col-xs-12'><p>U Norveškoj su najkorištenije dvije vrste norveškog jezika, a to su bokmål i nynorsk. Mi ćemo učiti bokmål varijantu (knjiški jezik) jer je rasprostranjeniji.</p>
+          <p>U ovoj lekciji upoznat ćeš se s norveškom abecedom. </p>
+          <p>Norveška je abeceda vrlo slična engleskoj abecedi, no ima nekoliko glasova koje ne viđamo niti u hrvatskom niti u engleskom jeziku. <br>
+
+          Vrlo je bitno naučiti kako se izgovaraju sva slova jer postoje razne iznimke koje utječu na to kako će riječ zvučati.</p>
+
+          <p>Norveška abeceda izgleda ovako:</p>
+          <h2 class="text-center">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Æ Ø Å</h2>
+          <br>
+          <p>Na kraju vidimo 3 slova koji ti vjerojatno nisu poznati, a to su:</p>
+          <ul>
+            <li><span class="pronounce">æ</span> (<span class="pronounce">bære</span>)</li>
+            <li><span class="pronounce">ø</span> (<span class="pronounce">brød</span>)</li>
+            <li><span class="pronounce">å</span> (<span class="pronounce">går</span>)</li>
+          </ul>
+          <p class="help-block">Možeš kliknuti na riječ ili slovo kako bi čuo izgovor riječi.</p>
+          <br>
+          <p>Ta su tri slova, u norveškom jeziku, samoglasnici. <br>
+          Ostali samoglasnici su a, e, i, o, u i y. Sva ostala slova su suglasnici.</p>
+          <br>
+          <p>U nastavku ćeš naučiti i riječi s tim slovima, ali i iznimke kod izgovaranja određenih kombinacija slova.</p>
+
+          <p class="text-center help-block">Klikni ovdje kako bi pristupio kvizu.</p>
+        </div>`,
         this.questions,
-        "vokabular"
+        "gramatika"
       ),
       new Lesson(
         "Drugi",

@@ -1,16 +1,32 @@
 .inactive{
-  background: #e6e6e6;
+  background: #f3f3f3;
   cursor: default;
 }
 .inactive:hover{
-  background: #e6e6e6;
+  background: #f3f3f3;
 }
+
+.active, .active:active, .active:hover{
+  background-color:#f1fcf0;
+  border: 1px solid #4cb944;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
 
 a{
   border-radius: 0px!important;
 }
 
+h4{
+  color: #2a9eeb!important;
+}
+
+p, p:focus{
+  color: #ffd20a!important;
+}
+
 span{
+  color: #f44b28;
   font-size: 36px;
   padding-right: 12px;
   border-right: 1px solid black;

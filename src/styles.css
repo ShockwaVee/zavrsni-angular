@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.pronounce{
+  text-decoration: underline;
+  cursor: pointer;
+  color: #2F538C;
+}
+#lesson p:not(.help-block){
+  font-size: 18px;
+}
+#lesson ul li{
+  font-size: 16px;
+}

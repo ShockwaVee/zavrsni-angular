@@ -3,25 +3,35 @@
     <div [hidden]="state!='lesson'" id="lesson">
       <h1 class="text-center">{{current_lesson.name}}</h1>
       <div #lesson_text></div>
-      <button (click)="onSay()" class="btn btn-primary">reci</button>
       <button class="btn btn-primary" (click)="onQuizActivate()">započni kviz</button>
     </div>
     <div *ngIf="state==='quiz'">
       <form class="center-block" (ngSubmit)="onSubmit(f)" #f="ngForm">
         <p class="text-center">{{current_question.question}}</p>
         <span *ngIf="incorrect" class="help-block text-center">Odgovor je netočan, pokušajte ponovo!</span>
-        <div class="answers text-center form-group"
-             *ngFor="let answer of current_question.possible_answers; let i = index">
-          <label class="radio-inline">
-            <input ngModel type="radio" name="question" value="{{answer}}" required> {{answer}}
-          </label>
+        <div *ngIf="current_question.type == 'radio'">
+          <div class="answers form-group"
+               *ngFor="let answer of current_question.answers; let i = index">
+            <label class="radio-inline">
+              <input ngModel type="radio" name="question" value="{{answer}}" required> {{answer}}
+            </label>
+          </div>
         </div>
-        <button [disabled]="!f.valid" type="submit" *ngIf="index != current_lesson.questions.length - 1"
-                class="btn btn-primary">sljedeće pitanje
-        </button>
-        <button [disabled]="!f.valid" type="submit" *ngIf="index == current_lesson.questions.length - 1"
-                class="btn btn-primary">kraj
-        </button>
+        <div *ngIf="current_question.type == 'input'">
+          <input ngModel name="question" placeholder="Upiši odgovor ovdje" type="text" class="form-control" #input_answer required>
+          <hr>
+            <div id="keyboard">
+              <button type="button" (click)="onEnterKey('æ', f)">Æ</button>
+              <button type="button" (click)="onEnterKey('ø', f)">Ø</button>
+              <button type="button" (click)="onEnterKey('å', f)">Å</button>
+            </div>
+        </div>
+          <button [disabled]="!f.valid" type="submit" *ngIf="index != current_lesson.questions.length - 1"
+                  class="btn btn-primary">sljedeće pitanje
+          </button>
+          <button [disabled]="!f.valid" type="submit" *ngIf="index == current_lesson.questions.length - 1"
+                  class="btn btn-primary">kraj
+          </button>
       </form>
     </div>
     <div *ngIf="state==='finished'">
