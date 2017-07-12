@@ -18,20 +18,35 @@
           </div>
         </div>
         <div *ngIf="current_question.type == 'input'">
-          <input ngModel name="question" placeholder="Upiši odgovor ovdje" type="text" class="form-control" #input_answer required>
+          <input ngModel name="question" placeholder="Upiši odgovor ovdje" type="text" class="form-control"
+                 #input_answer required>
           <hr>
-            <div id="keyboard">
+          <div class="keyboard">
+            <button type="button" (click)="onEnterKey('æ', f)">Æ</button>
+            <button type="button" (click)="onEnterKey('ø', f)">Ø</button>
+            <button type="button" (click)="onEnterKey('å', f)">Å</button>
+          </div>
+        </div>
+        <div *ngIf="current_question.type=='hangman' ">
+          <div #hangman id="hangman" class="col-xs-12">
+            <span *ngFor="let letter of current_question.correct_answer">_</span>
+            <input #input_answer type="text" maxlength="1" placeholder="Upiši slovo ovdje" ngModel name="hangman">
+            <div class="keyboard">
               <button type="button" (click)="onEnterKey('æ', f)">Æ</button>
               <button type="button" (click)="onEnterKey('ø', f)">Ø</button>
               <button type="button" (click)="onEnterKey('å', f)">Å</button>
             </div>
+            <button type="button" (click)="onCheck(f)" >Provjeri</button>
+
+          </div>
+          <div class="used-letters"></div>
         </div>
-          <button [disabled]="!f.valid" type="submit" *ngIf="index != current_lesson.questions.length - 1"
-                  class="btn btn-primary">sljedeće pitanje
-          </button>
-          <button [disabled]="!f.valid" type="submit" *ngIf="index == current_lesson.questions.length - 1"
-                  class="btn btn-primary">kraj
-          </button>
+        <button [disabled]="!f.valid||!word_solved" type="submit" *ngIf="index != current_lesson.questions.length - 1"
+                class="btn btn-primary">sljedeće pitanje
+        </button>
+        <button [disabled]="!f.valid||!word_solved" type="submit" *ngIf="index == current_lesson.questions.length - 1"
+                class="btn btn-primary">kraj
+        </button>
       </form>
     </div>
     <div *ngIf="state==='finished'">

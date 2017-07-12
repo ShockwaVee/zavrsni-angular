@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnDestroy, OnInit, Renderer2} from "@angular/core";
+import {Component, ViewChild, OnDestroy, OnInit, Renderer2} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {Subject} from "rxjs/Subject";
 import {Subscription} from "rxjs/Subscription";
@@ -24,10 +24,13 @@ export class LessonComponent implements OnInit, OnDestroy {
   current_question: Question;
   next_lesson: Lesson;
   incorrect: boolean = false;
-  keyPress: boolean = false;
+  word_solved: boolean = false;
+  used_letters: Array<string> = [];
+  correct_guesses: number = 0;
 
   @ViewChild('lesson_text') div_text;
   @ViewChild('input_answer') input;
+  @ViewChild('hangman') hangman;
 
   constructor(private lessonService: LessonService, private userService: UserService, private route: ActivatedRoute, private router: Router, private renderer: Renderer2) {
   }
@@ -54,46 +57,87 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.state = 'quiz';
   }
 
-  onNextLesson(){
+  onNextLesson() {
     this.router.navigate([this.route.parent.snapshot.params.type, this.next_lesson.name]);
   }
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    let re = new RegExp(this.current_question.correct_answer);
-    if (re.test(value.question.trim().toLowerCase())) {
-      this.incorrect = false;
-      if (this.index != this.current_lesson.questions.length - 1) {
-        this.index++;
-        this.question_changed.next(this.current_lesson.questions[this.index]);
-      } else {
-        this.finishedQuiz();
-      }
+    if (this.current_question.type == 'hangman') {
+      this.index++;
+      this.question_changed.next(this.current_lesson.questions[this.index]);
     }
     else {
-      this.incorrect = true;
+      let re = new RegExp(this.current_question.correct_answer);
+      if (re.test(value.question.trim().toLowerCase())) {
+        this.incorrect = false;
+        if (this.index != this.current_lesson.questions.length - 1) {
+          this.index++;
+          this.question_changed.next(this.current_lesson.questions[this.index]);
+        } else {
+          this.finishedQuiz();
+        }
+      }
+      else {
+        this.incorrect = true;
+      }
     }
   }
 
-  setLessonText(){
+  setLessonText() {
     this.state = 'lesson';
     this.div_text.nativeElement.innerHTML = this.current_lesson.lesson_text;
     let words = document.querySelectorAll('.pronounce');
     Array.from(words).forEach((e) => {
-      this.renderer.listen(e, 'click', (event)=>{(<any>window).responsiveVoice.speak(e.innerHTML, "Norwegian Female")});
+      this.renderer.listen(e, 'click', (event) => {
+        (<any>window).responsiveVoice.speak(e.innerHTML, "Norwegian Female")
+      });
     });
   }
 
-  onEnterKey(letter: string, form: NgForm){
+  onEnterKey(letter: string, form: NgForm) {
     this.input.nativeElement.value += letter;
-    form.controls['question'].patchValue(this.input.nativeElement.value);
+    if (this.current_question.type == "input") form.controls['question'].patchValue(this.input.nativeElement.value);
+    else{
+      form.controls['hangman'].patchValue(this.input.nativeElement.value)
+    }
   }
 
-  finishedQuiz(){
+  finishedQuiz() {
     this.state = 'finished';
     this.userService.current_user.setLesson(this.next_lesson.name);
     this.lessonService.getLesson(this.next_lesson.name).available = true;
     this.index = 0;
+  }
+
+  onCheck(form: NgForm) {
+    let counter = 0;
+    this.current_question.correct_answer.forEach((e, i) => {
+      if (e == form.value.hangman) {
+        this.hangman.nativeElement.children[i].innerHTML = e;
+        this.correct_guesses++;
+        counter++;
+        if (this.used_letters.indexOf(e) == -1) {
+          this.used_letters.push(e);
+          let p = document.createElement('p');
+          p.innerHTML = e;
+          this.hangman.nativeElement.nextElementSibling.append(p);
+        }
+      }
+    });
+    if (!counter) {
+      if (this.used_letters.indexOf(form.value.hangman) == -1) {
+        this.used_letters.push(form.value.hangman);
+        let p = document.createElement('p');
+        p.innerHTML = form.value.hangman;
+        this.hangman.nativeElement.nextElementSibling.append(p);
+      }
+    }
+    form.controls['hangman'].reset();
+    if (this.correct_guesses == this.current_question.correct_answer.length) {
+      this.word_solved = true;
+    }
+
   }
 
 

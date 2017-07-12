@@ -17,6 +17,11 @@ export class AppComponent implements OnInit {
 
   questions: Question[] = [
     new Question(
+      "Kako se kaže životinja na norveškom",
+      "hangman",
+      ['d', 'd', 'y', 'r'],
+    ),
+    new Question(
       "U koju skupinu slova spadaju slova Æ, Ø i Å?",
       "radio",
       "samoglasnici",

@@ -2,7 +2,7 @@ export class Question{
 	public question: string
   public type: string;
 	public answers: Array<string>;
-	public correct_answer: string;
+	public correct_answer: any;
 
 	constructor(question, type, correct_answer,  answers?){
 		this.question = question;

@@ -19,7 +19,7 @@ label{
 img{
   margin-bottom: 10px;
 }
-#keyboard button{
+.keyboard button{
   float: left;
   border: 1px solid #d5d5d5;
   background: #f3f3f3;
@@ -28,16 +28,21 @@ img{
   margin-right: 6px;
 }
 
-#keyboard button:hover{
+.keyboard button:hover{
   background: #d5d5d5;
 }
 
-#keyboard{
+.keyboard{
   margin: 8px;
 }
 
-#keyboard:after{
+.keyboard:after{
   content: '';
   clear: both;
   display: block;
+}
+
+#hangman span{
+  margin-right: 15px;
+  font-size: 22px;
 }
