@@ -17,6 +17,12 @@ export class AppComponent implements OnInit {
 
   questions: Question[] = [
     new Question(
+      'Na norveškom upiši što je prikazano na slici',
+      "guess",
+      "smørbrød",
+      {img: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/BLT_sandwich_on_toast.jpg'},
+    ),
+    new Question(
       "Kako se kaže životinja na norveškom",
       "hangman",
       ['d', 'd', 'y', 'r'],
@@ -25,33 +31,19 @@ export class AppComponent implements OnInit {
       "U koju skupinu slova spadaju slova Æ, Ø i Å?",
       "radio",
       "samoglasnici",
-      ["Samoglasnici", "Suglasnici", "Niti jednu od navedenih"],
+      {answers: ["Samoglasnici", "Suglasnici", "Niti jednu od navedenih"]},
     ),
     new Question(
       "Koju varijantu norveškog jezika ćemo učiti?",
       "radio",
       "bokmål",
-      ["Riksmål", "Nynorsk", "Bokmål", "Neunorsk"]
+      {answers: ["Riksmål", "Nynorsk", "Bokmål", "Neunorsk"]}
     ),
     new Question(
       "Navedi jedan novi glas koji se pojavljuje u norveškom.",
       "input",
       "^[åøæ]{1}$"
     ),
-  ];
-  questions1: Question[] = [
-    new Question(
-      "Trece pitanje?",
-      "radio",
-      ["odgovor1", "odgovor2", "odgovor3", "odgovor4"],
-      "odgovor3"
-    ),
-    new Question(
-      "Cetvrto pitanje?",
-      "radio",
-      ["odgovor1", "odgovor2", "odgovor3", "odgovor4"],
-      "odgovor1"
-    )
   ];
 
   user: User = new User('Marko', []);
@@ -99,7 +91,7 @@ export class AppComponent implements OnInit {
         "Treci",
         "Opis treceg lessona",
         "nema random sranja",
-        this.questions1,
+        this.questions,
         "vokabular"
       ),
       new Lesson(

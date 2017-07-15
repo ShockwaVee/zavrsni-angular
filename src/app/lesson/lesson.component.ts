@@ -97,10 +97,11 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   onEnterKey(letter: string, form: NgForm) {
     this.input.nativeElement.value += letter;
-    if (this.current_question.type == "input") form.controls['question'].patchValue(this.input.nativeElement.value);
+    if (this.current_question.type == "input" || this.current_question.type == 'guess') form.controls['question'].patchValue(this.input.nativeElement.value);
     else{
-      form.controls['hangman'].patchValue(this.input.nativeElement.value)
+      form.controls['hangman'].patchValue(this.input.nativeElement.value);
     }
+    this.input.nativeElement.focus();
   }
 
   finishedQuiz() {
@@ -138,6 +139,11 @@ export class LessonComponent implements OnInit, OnDestroy {
       this.word_solved = true;
     }
 
+  }
+
+  shouldDisable(form: NgForm){
+    if (this.current_question.type=="radio"||this.current_question.type=="input"||this.current_question.type=="guess") return !form.valid;
+    else return !this.word_solved;
   }
 
 

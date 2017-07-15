@@ -36,15 +36,24 @@
               <button type="button" (click)="onEnterKey('ø', f)">Ø</button>
               <button type="button" (click)="onEnterKey('å', f)">Å</button>
             </div>
-            <button type="button" (click)="onCheck(f)" >Provjeri</button>
-
+            <button type="button" (click)="onCheck(f)">Provjeri</button>
           </div>
           <div class="used-letters"></div>
         </div>
-        <button [disabled]="!f.valid||!word_solved" type="submit" *ngIf="index != current_lesson.questions.length - 1"
+        <div *ngIf="current_question.type=='guess' ">
+          <img class="img-responsive"
+               src="https://upload.wikimedia.org/wikipedia/commons/e/e6/BLT_sandwich_on_toast.jpg" alt="">
+          <input #input_answer placeholder="Ovdje upiši odgovor" type="text" name="question" ngModel required/>
+          <div class="keyboard">
+            <button type="button" (click)="onEnterKey('æ', f)">Æ</button>
+            <button type="button" (click)="onEnterKey('ø', f)">Ø</button>
+            <button type="button" (click)="onEnterKey('å', f)">Å</button>
+          </div>
+        </div>
+        <button [disabled]="shouldDisable(f)" type="submit" *ngIf="index != current_lesson.questions.length - 1"
                 class="btn btn-primary">sljedeće pitanje
         </button>
-        <button [disabled]="!f.valid||!word_solved" type="submit" *ngIf="index == current_lesson.questions.length - 1"
+        <button [disabled]="shouldDisable(f)" type="submit" *ngIf="index == current_lesson.questions.length - 1"
                 class="btn btn-primary">kraj
         </button>
       </form>
