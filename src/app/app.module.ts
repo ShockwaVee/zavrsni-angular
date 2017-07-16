@@ -14,6 +14,9 @@ import { LessonListItemComponent } from './lesson-list/lesson-list-item/lesson-l
 import {UserService} from "./user/user.service";
 import {ProgressService} from "./lesson/progress.service";
 import {CapitalizePipe} from "./capitalize.pipe";
+import { SigninComponent } from './auth/signin/signin.component';
+import { SignupComponent } from './auth/signup/signup.component';
+import {AuthService} from "app/auth/auth.service";
 
 @NgModule({
   declarations: [
@@ -23,7 +26,9 @@ import {CapitalizePipe} from "./capitalize.pipe";
     LessonListComponent,
     LessonStartComponent,
     LessonListItemComponent,
-    CapitalizePipe
+    CapitalizePipe,
+    SigninComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +36,7 @@ import {CapitalizePipe} from "./capitalize.pipe";
     HttpModule,
     AppRoutingModule
   ],
-  providers: [LessonService, UserService, ProgressService],
+  providers: [LessonService, UserService, ProgressService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
