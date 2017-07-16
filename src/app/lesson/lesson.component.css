@@ -46,3 +46,7 @@ img{
   margin-right: 15px;
   font-size: 22px;
 }
+
+.border{
+  border: 1px solid black;
+}

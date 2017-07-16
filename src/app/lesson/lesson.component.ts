@@ -8,6 +8,7 @@ import {Lesson} from "./lesson.model";
 import {Question} from "./question.model";
 import {LessonService} from '../lesson.service';
 import {UserService} from "../user/user.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: "app-lesson",
@@ -24,13 +25,17 @@ export class LessonComponent implements OnInit, OnDestroy {
   current_question: Question;
   next_lesson: Lesson;
   incorrect: boolean = false;
-  word_solved: boolean = false;
+  quiz_solved: boolean = false;
+  attempted_solve: Array<string> = [];
   used_letters: Array<string> = [];
   correct_guesses: number = 0;
+  unlisten: Array<any> = [];
 
   @ViewChild('lesson_text') div_text;
   @ViewChild('input_answer') input;
   @ViewChild('hangman') hangman;
+  @ViewChild('answer') answer_array;
+  @ViewChild('available') available_array;
 
   constructor(private lessonService: LessonService, private userService: UserService, private route: ActivatedRoute, private router: Router, private renderer: Renderer2) {
   }
@@ -39,6 +44,8 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.subscription_question = this.question_changed.subscribe(
       (question: Question) => {
         this.current_question = question;
+        this.correct_guesses = 0;
+        this.quiz_solved = false;
       }
     );
     this.subscription_lesson = this.route.params.subscribe((params: Params) => {
@@ -63,7 +70,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    if (this.current_question.type == 'hangman') {
+    if (this.current_question.type == 'hangman' || this.current_question.type == 'rearrange') {
       this.index++;
       this.question_changed.next(this.current_lesson.questions[this.index]);
     }
@@ -89,7 +96,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.div_text.nativeElement.innerHTML = this.current_lesson.lesson_text;
     let words = document.querySelectorAll('.pronounce');
     Array.from(words).forEach((e) => {
-      this.renderer.listen(e, 'click', (event) => {
+      this.renderer.listen(e, 'click', () => {
         (<any>window).responsiveVoice.speak(e.innerHTML, "Norwegian Female")
       });
     });
@@ -98,7 +105,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   onEnterKey(letter: string, form: NgForm) {
     this.input.nativeElement.value += letter;
     if (this.current_question.type == "input" || this.current_question.type == 'guess') form.controls['question'].patchValue(this.input.nativeElement.value);
-    else{
+    else {
       form.controls['hangman'].patchValue(this.input.nativeElement.value);
     }
     this.input.nativeElement.focus();
@@ -136,14 +143,45 @@ export class LessonComponent implements OnInit, OnDestroy {
     }
     form.controls['hangman'].reset();
     if (this.correct_guesses == this.current_question.correct_answer.length) {
-      this.word_solved = true;
+      this.quiz_solved = true;
     }
 
   }
 
-  shouldDisable(form: NgForm){
-    if (this.current_question.type=="radio"||this.current_question.type=="input"||this.current_question.type=="guess") return !form.valid;
-    else return !this.word_solved;
+  shouldDisable(form: NgForm) {
+    if (this.current_question.type == "radio" || this.current_question.type == "input" || this.current_question.type == "guess") return !form.valid;
+    else return !this.quiz_solved;
+  }
+
+  onPush(e) {
+    let div = document.createElement('div');
+    div.innerHTML = e.target.innerText;
+    this.attempted_solve.push(e.target.innerText);
+    e.target.remove();
+    this.renderer.setStyle(div, 'border', '1px solid black');
+    this.unlisten.push(this.renderer.listen(div, 'click', (event) => this.onPop(event)));
+    this.answer_array.nativeElement.append(div);
+    if (this.current_question.correct_answer.length == this.attempted_solve.length) {
+      this.current_question.correct_answer.forEach((e, i) => {
+        if (e == this.attempted_solve[i]) this.correct_guesses++;
+      });
+      if (this.correct_guesses == this.current_question.correct_answer.length) {
+        this.unlisten.forEach((e) => e());
+        this.quiz_solved = true;
+      } else {
+        this.correct_guesses = 0;
+      }
+    }
+  }
+
+  onPop(event) {
+    let div = document.createElement('div');
+    div.innerHTML = event.target.innerText;
+    this.attempted_solve.splice(this.attempted_solve.indexOf(event.target.innerText), 1);
+    event.target.remove();
+    this.renderer.setStyle(div, 'border', '1px solid black');
+    this.renderer.listen(div, 'click', (event) => this.onPush(event));
+    this.available_array.nativeElement.append(div);
   }
 
 

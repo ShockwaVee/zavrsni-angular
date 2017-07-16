@@ -17,6 +17,11 @@ export class AppComponent implements OnInit {
 
   questions: Question[] = [
     new Question(
+      'Rasporedi dijelove rečenice da tvore smislenu cjelinu.',
+      "rearrange",
+      ['jeg', 'elsker', 'et eple'],
+    ),
+    new Question(
       'Na norveškom upiši što je prikazano na slici',
       "guess",
       "smørbrød",

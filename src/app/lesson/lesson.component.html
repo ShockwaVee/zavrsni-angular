@@ -50,6 +50,17 @@
             <button type="button" (click)="onEnterKey('å', f)">Å</button>
           </div>
         </div>
+        <div *ngIf="current_question.type=='rearrange' ">
+          <h3>Odgovor:</h3>
+          <div #answer></div>
+          <hr>
+          <div #available>
+            <div *ngFor="let segment of current_question.shuffled_array" (click)="onPush($event)"
+                 style="border: 1px solid black"> {{segment}}
+            </div>
+          </div>
+        </div>
+
         <button [disabled]="shouldDisable(f)" type="submit" *ngIf="index != current_lesson.questions.length - 1"
                 class="btn btn-primary">sljedeće pitanje
         </button>
