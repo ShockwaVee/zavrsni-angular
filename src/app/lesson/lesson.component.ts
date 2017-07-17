@@ -129,7 +129,7 @@ export class LessonComponent implements OnInit, OnDestroy {
           this.used_letters.push(e);
           let p = document.createElement('p');
           p.innerHTML = e;
-          this.hangman.nativeElement.nextElementSibling.append(p);
+          this.hangman.nativeElement.nextElementSibling.appendChild(p);
         }
       }
     });
@@ -138,7 +138,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         this.used_letters.push(form.value.hangman);
         let p = document.createElement('p');
         p.innerHTML = form.value.hangman;
-        this.hangman.nativeElement.nextElementSibling.append(p);
+        this.hangman.nativeElement.nextElementSibling.appendChild(p);
       }
     }
     form.controls['hangman'].reset();
@@ -160,7 +160,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     e.target.remove();
     this.renderer.setStyle(div, 'border', '1px solid black');
     this.unlisten.push(this.renderer.listen(div, 'click', (event) => this.onPop(event)));
-    this.answer_array.nativeElement.append(div);
+    this.answer_array.nativeElement.appendChild(div);
     if (this.current_question.correct_answer.length == this.attempted_solve.length) {
       this.current_question.correct_answer.forEach((e, i) => {
         if (e == this.attempted_solve[i]) this.correct_guesses++;
@@ -181,7 +181,7 @@ export class LessonComponent implements OnInit, OnDestroy {
     event.target.remove();
     this.renderer.setStyle(div, 'border', '1px solid black');
     this.renderer.listen(div, 'click', (event) => this.onPush(event));
-    this.available_array.nativeElement.append(div);
+    this.available_array.nativeElement.appendChild(div);
   }
 
 

@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {LessonComponent} from '../lesson/lesson.component';
 import {LessonService} from '../lesson.service';
 import {Lesson} from '../lesson/lesson.model';
 import {ActivatedRoute, Params, Router} from "@angular/router";
@@ -13,7 +12,6 @@ import {Subscription} from "rxjs/Subscription";
 })
 export class LessonListComponent implements OnInit, OnDestroy {
   lessonList: Lesson[];
-  currentLesson: Lesson;
   subscription: Subscription = new Subscription;
 
   constructor(private lessonService: LessonService, private route: ActivatedRoute, private router: Router) {
@@ -23,7 +21,7 @@ export class LessonListComponent implements OnInit, OnDestroy {
     this.subscription = this.route.params.subscribe((params: Params) => {
       let re = new RegExp("vokabular|gramatika|interpunkcija");
       if (re.test(params['type'])) {
-        this.lessonList = this.lessonService.getLessonList(params['type'])
+        this.lessonList = this.lessonService.getLessonList(params['type']);
       }
       else this.router.navigate(['/']);
     });

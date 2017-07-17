@@ -1,19 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 import * as firebase from 'firebase';
 
-import {Lesson} from "./lesson/lesson.model";
-import {Question} from "./lesson/question.model";
-import {LessonService} from "./lesson.service";
-import {User} from "./user/user.model";
-import {UserService} from "./user/user.service";
-
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
-  constructor(private lessonService: LessonService, private userService: UserService) {
+  constructor() {
   }
 
 

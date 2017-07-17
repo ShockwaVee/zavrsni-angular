@@ -17,6 +17,7 @@ import {CapitalizePipe} from "./capitalize.pipe";
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import {AuthService} from "app/auth/auth.service";
+import {AuthGuardService} from "./auth/auth-guard.service";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import {AuthService} from "app/auth/auth.service";
     HttpModule,
     AppRoutingModule
   ],
-  providers: [LessonService, UserService, ProgressService, AuthService],
+  providers: [LessonService, UserService, ProgressService, AuthService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

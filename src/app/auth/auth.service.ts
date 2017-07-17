@@ -6,6 +6,7 @@ import {User} from "../user/user.model";
 import {LessonService} from "../lesson.service";
 import {Question} from "../lesson/question.model";
 import {Lesson} from "../lesson/lesson.model";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class AuthService {
@@ -141,7 +142,7 @@ export class AuthService {
   }
 
 
-  constructor(private http: Http, private userService: UserService, private lessonService: LessonService) {
+  constructor(private http: Http, private userService: UserService, private lessonService: LessonService, private router: Router) {
   }
 
   signUpUser(email: string, password: string, name: string, surname: string) {
@@ -162,19 +163,7 @@ export class AuthService {
   signInUser(email: string, password: string) {
     firebase.auth().signInWithEmailAndPassword(email, password).then(response => firebase.auth().currentUser.getIdToken().then((token: string) => {
       this.token = token;
-      let user: User;
-      this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/users/${response.uid}.json?auth=${this.token}`).subscribe((response) => {
-        let data = response.json();
-        for (var property in data) {
-          let name = data[property].name;
-          let surname = data[property].surname;
-          let available_lessons = data[property].available_lessons;
-
-          let user = new User(name, surname, available_lessons);
-          this.userService.setUser(user);
-          this.initializeLessonList();
-        }
-      });
+      this.getUserFromDB(response.uid);
     })).catch(error => console.log(error));
   }
 
@@ -184,8 +173,25 @@ export class AuthService {
     });
     return this.token;
   }
-/*odavde obrisat initialize ovo sve, dodat na bazu to
-slozit auth guard za ovo sve
- */
+
+  getUserFromDB(uid: string) {
+    this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/users/${uid}.json?auth=${this.token}`).subscribe((response) => {
+      let data = response.json();
+      for (var property in data) {
+        let name = data[property].name;
+        let surname = data[property].surname;
+        let available_lessons = data[property].available_lessons;
+        let user = new User(name, surname, available_lessons);
+        this.userService.setUser(user);
+        this.initializeLessonList();
+        this.router.navigate(['/gramatika']);
+      }
+    });
+  }
+
+  isAuthenticated() {
+    return this.token != null;
+  }
+
 
 }
