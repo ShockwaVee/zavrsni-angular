@@ -1,7 +1,6 @@
 export class User {
   public name: string;
   public surname: string;
-  public email: string;
   public challenge_points: number;
   private available_lessons: Array<string>;
   public uid: string;

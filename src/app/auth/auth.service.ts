@@ -23,9 +23,8 @@ export class AuthService {
         available_lessons: ['Prvi', 'izgovor', 'Cetvrti']
       };
       firebase.auth().currentUser.getIdToken().then((token: string) => {
-        console.log(post_object);
         this.token = token;
-        this.http.post(`https://zavrsni-rad-f80a0.firebaseio.com/users/${response.uid}.json?auth=${this.token}`, post_object).subscribe();
+        this.http.put(`https://zavrsni-rad-f80a0.firebaseio.com/users/${response.uid}.json?auth=${this.token}`, post_object).subscribe();
       });
       //
     }).catch((error) => console.log(error));
@@ -39,6 +38,9 @@ export class AuthService {
   }
 
   getToken() {
+    if (window.localStorage.getItem('zavrsni-rad-user') != null){
+      this.token = JSON.parse(window.localStorage.getItem('firebase:authUser:AIzaSyDYgOyH3PI85yE47QYAhT6ajfadRqmxKtM:[DEFAULT]')).stsTokenManager.accessToken;
+    }else
     firebase.auth().currentUser.getIdToken().then((token: string) => {
       this.token = token;
     });
@@ -53,16 +55,14 @@ export class AuthService {
   getUserFromDB(uid: string) {
     this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/users/${uid}.json?auth=${this.token}`).subscribe((response) => {
       let data = response.json();
-      for (var property in data) {
-        let name = data[property].name;
-        let surname = data[property].surname;
-        let available_lessons = data[property].available_lessons;
+        let name = data.name;
+        let surname = data.surname;
+        let available_lessons = data.available_lessons;
         let user = new User(name, surname, available_lessons, uid);
         this.userService.setUser(user);
         window.localStorage.setItem('zavrsni-rad-user', JSON.stringify(user));
         this.lessonService.initializeLessonList();
         this.router.navigate(['/gramatika']);
-      }
     });
   }
 

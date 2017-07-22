@@ -3,10 +3,11 @@ import {Injectable} from "@angular/core";
 import {Lesson} from "./lesson/lesson.model";
 import {UserService} from "./user/user.service";
 import {Question} from "./lesson/question.model";
+import {Http} from "@angular/http";
 
 @Injectable()
 export class LessonService {
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private http: Http) {
   }
 
   public lessonList: Lesson[];
@@ -24,7 +25,7 @@ export class LessonService {
       "guess",
       "smørbrød",
       {img: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/BLT_sandwich_on_toast.jpg'},
-    ),
+    ),/*
     new Question(
       "Kako se kaže životinja na norveškom",
       "hangman",
@@ -46,7 +47,7 @@ export class LessonService {
       "Navedi jedan novi glas koji se pojavljuje u norveškom.",
       "input",
       "^[åøæ]{1}$"
-    ),
+    ),*/
   ];
 
   initializeLessonList() {
@@ -164,4 +165,13 @@ export class LessonService {
     });
 
   }
+
+  updateAvailableLessons(name: string){
+    let uid = this.userService.current_user.uid;
+    let token = JSON.parse(window.localStorage.getItem('firebase:authUser:AIzaSyDYgOyH3PI85yE47QYAhT6ajfadRqmxKtM:[DEFAULT]')).stsTokenManager.accessToken;
+    this.userService.current_user.setLesson(name);
+    this.http.patch(`https://zavrsni-rad-f80a0.firebaseio.com/users/${uid}.json?auth=${token}`, '{"available_lessons": '+ JSON.stringify(this.userService.current_user.getAvailableLessons()) +'}').subscribe();
+
+  }
+
 }

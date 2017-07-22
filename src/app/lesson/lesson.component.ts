@@ -8,7 +8,6 @@ import {Lesson} from "./lesson.model";
 import {Question} from "./question.model";
 import {LessonService} from '../lesson.service';
 import {UserService} from "../user/user.service";
-import {forEach} from "@angular/router/src/utils/collection";
 
 @Component({
   selector: "app-lesson",
@@ -113,7 +112,7 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   finishedQuiz() {
     this.state = 'finished';
-    this.userService.current_user.setLesson(this.next_lesson.name);
+    this.lessonService.updateAvailableLessons(this.next_lesson.name);
     this.lessonService.getLesson(this.next_lesson.name).available = true;
     this.index = 0;
   }
@@ -189,4 +188,5 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.subscription_question.unsubscribe();
     this.subscription_lesson.unsubscribe();
   }
+
 }
