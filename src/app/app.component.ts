@@ -1,5 +1,9 @@
 import {Component, OnInit} from "@angular/core";
 import * as firebase from 'firebase';
+import {AuthService} from "./auth/auth.service";
+import {User} from "./user/user.model";
+import {UserService} from "./user/user.service";
+import {LessonService} from "./lesson.service";
 
 @Component({
   selector: "app-root",
@@ -7,7 +11,7 @@ import * as firebase from 'firebase';
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
-  constructor() {
+  constructor(private userService: UserService, private lessonService: LessonService) {
   }
 
 
@@ -16,6 +20,12 @@ export class AppComponent implements OnInit {
       apiKey: "AIzaSyDYgOyH3PI85yE47QYAhT6ajfadRqmxKtM",
       authDomain: "zavrsni-rad-f80a0.firebaseapp.com",
     });
+    if (window.localStorage.getItem('zavrsni-rad-user') != null){
+      let data = JSON.parse(window.localStorage.getItem('zavrsni-rad-user'));
+      let user = new User(data.name, data.surname, data.available_lessons, data.uid);
+      this.userService.setUser(user);
+      this.lessonService.initializeLessonList();
+    }
     /*inicijalizaciju obavezno premjestiti jer nema smisla da bude tu, mozda se nit ne bude ulogiral
      prilikom logina settat lesson list
      u biti ne, ako je vec ulogiran onda kurac

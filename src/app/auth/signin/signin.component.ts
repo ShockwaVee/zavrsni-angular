@@ -20,4 +20,9 @@ export class SigninComponent implements OnInit {
     this.authService.signInUser(email, password);
   }
 
+  onLogout(){
+    this.authService.logOutUser();
+    window.localStorage.removeItem('zavrsni-rad-user');
+  }
+
 }
