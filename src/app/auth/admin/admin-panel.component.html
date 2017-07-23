@@ -1,0 +1,44 @@
+<div class="row">
+  <h1 class="text-center">Uređivanje lekcija</h1>
+  <div class="col-md-6">
+    <h2 class="text-center">Gramatika</h2>
+    <div class="col-md-12" *ngFor="let lesson of listGrammar; let i=index">
+      <div class="delete pull-right col-md-1" (click)="onDelete()"></div>
+      <div class="edit pull-right col-md-1" (click)="onEdit()"></div>
+      <a class="list-group-item clearfix" style="cursor: pointer;" [routerLink]="['/',lesson.type, lesson.name]"
+         routerLinkActive="active">
+        <div class="pull-left">
+          <span>{{i+1}}</span>
+          <div class="pull-right lesson-info">
+            <h4 class="list-group-item-heading">{{ lesson.name | capitalize }}</h4>
+            <p class="list-group-item-text">{{ lesson.description }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h2 class="text-center">Vokabular</h2>
+    <div class="col-md-12" *ngFor="let lesson of listVocabulary; let i=index">
+      <div class="delete pull-right col-md-1" (click)="onDelete()"></div>
+      <div class="edit pull-right col-md-1" (click)="onEdit()"></div>
+      <a class="list-group-item clearfix" style="cursor: pointer;" [routerLink]="['/',lesson.type, lesson.name]"
+         routerLinkActive="active">
+        <div class="pull-left">
+          <span>{{i+1}}</span>
+          <div class="pull-right lesson-info">
+            <h4 class="list-group-item-heading">{{ lesson.name | capitalize }}</h4>
+            <p class="list-group-item-text">{{ lesson.description }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <button class="btn btn-danger center-block" (click)="onAdd()" #button_add>Dodaj lekciju</button>
+</div>
+<div *ngIf="addMode" class="row">
+  <router-outlet></router-outlet>
+</div>

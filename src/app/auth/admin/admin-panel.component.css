@@ -1,0 +1,59 @@
+.inactive{
+  background: #f3f3f3;
+  cursor: default;
+}
+.inactive:hover{
+  background: #f3f3f3;
+}
+
+.active, .active:active, .active:hover{
+  background-color:#f1fcf0;
+  border: 1px solid #4cb944;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+
+a{
+  border-radius: 0px!important;
+}
+
+h4{
+  color: #2a9eeb!important;
+}
+
+p, p:focus{
+  color: #ffd20a!important;
+}
+
+span{
+  color: #f44b28;
+  font-size: 36px;
+  padding-right: 12px;
+  border-right: 1px solid black;
+}
+
+.lesson-info{
+  margin-top: 5px;
+  margin-left: 12px;
+}
+
+div.delete{
+  display: block;
+  width: 20px;
+  height: 20px;
+  z-index: 100;
+  background: transparent url('../../../assets/delete.png') no-repeat scroll center center;
+  background-size: contain;
+  margin-top: 12px;
+  margin-right: 8px;
+}
+div.edit{
+  display: block;
+  width: 20px;
+  height: 20px;
+  z-index: 100;
+  background: transparent url('../../../assets/edit.png') no-repeat scroll center center;
+  background-size: contain;
+  margin-top: 12px;
+  margin-right: 8px;
+}

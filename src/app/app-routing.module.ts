@@ -8,8 +8,15 @@ import {ProgressGuard} from "./lesson/progress-guard.service";
 import {SignupComponent} from "./auth/signup/signup.component";
 import {SigninComponent} from "./auth/signin/signin.component";
 import {AuthGuardService} from "./auth/auth-guard.service";
+import {AdminPanelComponent} from "./auth/admin/admin-panel.component";
+import {LessonAddComponent} from "./auth/admin/lesson-add/lesson-add.component";
 
 const appRoutes: Routes = [
+  {
+    path: 'admin', component: AdminPanelComponent, children: [
+    {path: '', component: LessonAddComponent}
+  ]
+  },
   {
     path: 'signup', component: SignupComponent
   },

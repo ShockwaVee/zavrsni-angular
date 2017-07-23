@@ -1,0 +1,156 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="type">Tip</label>
+            <select
+              id="type"
+              class="form-control"
+              name="type"
+              ngModel>
+              <option name="grammar" id="grammar" value="gramatika">Gramatika</option>
+              <option name="vocabulary" id="vocabulary" value="vokabular">Vokabular</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Naslov</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              ngModel
+              class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="name">Opis</label>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              ngModel
+              class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="description">Tekst lekcije</label>
+            <textarea
+              type="text"
+              id="lessonText"
+              class="form-control"
+              name="lessonText"
+              ngModel
+              rows="6"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div *ngFor="let question of questionsArray; let i=index">
+            <div class="form-group">
+              <label>Pitanje</label>
+              <input
+                type="text"
+                name="question{{i}}"
+                ngModel
+                class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Tip</label>
+              <input
+                type="text"
+                name="type{{i}}"
+                ngModel
+                class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Točan odgovor</label>
+              <input
+                type="text"
+                name="correctAnswer{{i}}"
+                ngModel
+                class="form-control">
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <label>Poveznica slike</label>
+                  <input
+                    type="url"
+                    name="imgURL{{i}}"
+                    ngModel
+                    class="form-control">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Odgovori</label>
+              <div *ngFor="let answer of answersArray[i];let j=index">
+                <input
+                  type="text"
+                  name="answer-{{i}}-{{j}}"
+                  ngModel
+                  class="form-control">
+              </div>
+            </div>
+
+            <button type="button" (click)="onAddAnswer(i)">Dodaj odgovor</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <button type="button" (click)="onAddQuestion()">Dodaj pitanje</button>
+        </div>
+      </div>
+      <button type="submit">Dodaj lekciju</button>
+    </form>
+  </div>
+</div>
+
+<!--<div class="row">
+  <div class="col-xs-12" formArrayName="answers">
+    <h3>Odgovori</h3>
+    <div
+      class="row"
+      *ngFor="let answerControl of getControlsAnswers(); let i = index"
+      [formGroupName]="i"
+      style="margin-top: 10px;">
+      <div class="col-xs-4">
+        <input
+          type="text"
+          class="form-control"
+          formControlName="value">
+      </div>
+      <div class="col-xs-1">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="onDeleteAnswer(i)">X
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="onAddAnswer()">Dodaj odgovor
+        </button>
+      </div>
+    </div>
+  </div>
+</div>-->

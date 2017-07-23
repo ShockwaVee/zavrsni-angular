@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
@@ -18,6 +18,8 @@ import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import {AuthService} from "app/auth/auth.service";
 import {AuthGuardService} from "./auth/auth-guard.service";
+import {AdminPanelComponent} from "./auth/admin/admin-panel.component";
+import { LessonAddComponent } from './auth/admin/lesson-add/lesson-add.component';
 
 @NgModule({
   declarations: [
@@ -29,12 +31,15 @@ import {AuthGuardService} from "./auth/auth-guard.service";
     LessonListItemComponent,
     CapitalizePipe,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    AdminPanelComponent,
+    LessonAddComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [LessonService, UserService, ProgressService, AuthService, AuthGuardService],
