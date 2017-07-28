@@ -20,6 +20,7 @@ import {AuthService} from "app/auth/auth.service";
 import {AuthGuardService} from "./auth/auth-guard.service";
 import {AdminPanelComponent} from "./auth/admin/admin-panel.component";
 import { LessonAddComponent } from './auth/admin/lesson-add/lesson-add.component';
+import {AdminGuardService} from "./auth/admin/admin-guard.service";
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { LessonAddComponent } from './auth/admin/lesson-add/lesson-add.component
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [LessonService, UserService, ProgressService, AuthService, AuthGuardService],
+  providers: [LessonService, UserService, ProgressService, AuthService, AuthGuardService, AdminGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

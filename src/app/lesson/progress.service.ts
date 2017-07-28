@@ -5,6 +5,7 @@ import {UserService} from "../user/user.service";
 export class ProgressService {
 
   constructor(private userService: UserService) {
+
   }
 
   canAccess(param: string) {

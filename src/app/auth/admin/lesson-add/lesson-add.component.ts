@@ -3,6 +3,7 @@ import {Question} from "../../../lesson/question.model";
 import {NgForm} from "@angular/forms";
 import {Lesson} from "../../../lesson/lesson.model";
 import {Http} from "@angular/http";
+import {AuthService} from "../../auth.service";
 
 @Component({
   selector: 'app-lesson-add',
@@ -13,7 +14,7 @@ export class LessonAddComponent implements OnInit {
   questionsArray: Array<Question> = [];
   answersArray = [];
 
-  constructor(private http: Http) {
+  constructor(private http: Http, private authService: AuthService) {
   }
 
   ngOnInit() {
@@ -55,7 +56,7 @@ export class LessonAddComponent implements OnInit {
 
     }
 
-    let token = JSON.parse(window.localStorage.getItem('firebase:authUser:AIzaSyDYgOyH3PI85yE47QYAhT6ajfadRqmxKtM:[DEFAULT]')).stsTokenManager.accessToken;
+    let token = this.authService.getToken();
     let post_object={
       'name' : name,
       'description': description,

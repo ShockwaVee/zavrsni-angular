@@ -11,4 +11,8 @@ export class UserService {
     this.current_user = user;
   }
 
+  isAdmin(){
+    return this.current_user.admin_rights;
+  }
+
 }

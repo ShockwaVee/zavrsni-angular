@@ -18,9 +18,16 @@
         <li><a routerLink="/vokabular">Vokabular</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a routerLink="/signin">Sign in</a></li>
-        <li><a routerLink="/signup">Sign up</a></li>
+        <li><a *ngIf="!isAuthenticated()" routerLink="/signin">Sign in</a></li>
+        <li><a *ngIf="!isAuthenticated()" routerLink="/signup">Sign up</a></li>
+        <li><a
+          routerLink="/admin"
+          *ngIf="isAdmin()">Admin panel</a></li>
+        <li><a
+          (click)="onLogout()"
+          *ngIf="isAuthenticated()">Logout</a></li>
       </ul>
+
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

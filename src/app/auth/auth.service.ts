@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 export class AuthService {
   token: string;
   uid: string;
+  admin_rights: boolean;
 
   constructor(private http: Http, private userService: UserService, private lessonService: LessonService, private router: Router) {
   }
@@ -20,13 +21,14 @@ export class AuthService {
         uid: response.uid,
         name: name,
         surname: surname,
+        admin_rights: false,
         available_lessons: ['Prvi', 'izgovor', 'Cetvrti']
       };
       firebase.auth().currentUser.getIdToken().then((token: string) => {
         this.token = token;
         this.http.put(`https://zavrsni-rad-f80a0.firebaseio.com/users/${response.uid}.json?auth=${this.token}`, post_object).subscribe();
+        this.signInUser(email, password);
       });
-      //
     }).catch((error) => console.log(error));
   }
 
@@ -37,19 +39,15 @@ export class AuthService {
     })).catch(error => console.log(error));
   }
 
-  getToken() {
-    if (window.localStorage.getItem('zavrsni-rad-user') != null){
-      this.token = JSON.parse(window.localStorage.getItem('firebase:authUser:AIzaSyDYgOyH3PI85yE47QYAhT6ajfadRqmxKtM:[DEFAULT]')).stsTokenManager.accessToken;
-    }else
-    firebase.auth().currentUser.getIdToken().then((token: string) => {
-      this.token = token;
-    });
+  getToken(){
     return this.token;
   }
 
   logOutUser() {
     firebase.auth().signOut();
     this.token = null;
+    this.admin_rights = false;
+    this.router.navigate(['/']);
   }
 
   getUserFromDB(uid: string) {
@@ -58,9 +56,9 @@ export class AuthService {
         let name = data.name;
         let surname = data.surname;
         let available_lessons = data.available_lessons;
-        let user = new User(name, surname, available_lessons, uid);
+        this.admin_rights = data.admin_rights;
+        let user = new User(name, surname, available_lessons, uid, this.admin_rights);
         this.userService.setUser(user);
-        window.localStorage.setItem('zavrsni-rad-user', JSON.stringify(user));
         this.lessonService.initializeLessonList();
         this.router.navigate(['/gramatika']);
     });

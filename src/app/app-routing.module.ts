@@ -10,10 +10,11 @@ import {SigninComponent} from "./auth/signin/signin.component";
 import {AuthGuardService} from "./auth/auth-guard.service";
 import {AdminPanelComponent} from "./auth/admin/admin-panel.component";
 import {LessonAddComponent} from "./auth/admin/lesson-add/lesson-add.component";
+import {AdminGuardService} from "./auth/admin/admin-guard.service";
 
 const appRoutes: Routes = [
   {
-    path: 'admin', component: AdminPanelComponent, children: [
+    path: 'admin', component: AdminPanelComponent, canActivate:[AdminGuardService], children: [
     {path: '', component: LessonAddComponent}
   ]
   },
