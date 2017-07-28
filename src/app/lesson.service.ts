@@ -4,6 +4,7 @@ import {Lesson} from "./lesson/lesson.model";
 import {UserService} from "./user/user.service";
 import {Question} from "./lesson/question.model";
 import {Http} from "@angular/http";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class LessonService {
@@ -12,6 +13,7 @@ export class LessonService {
 
   public lessonList: Lesson[];
   public currentLessonList;
+  lessonAdded = new Subject<Lesson>();
 
 
   questions: Question[] = [
@@ -25,29 +27,29 @@ export class LessonService {
       "guess",
       "smørbrød",
       {img: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/BLT_sandwich_on_toast.jpg'},
-    ),/*
-    new Question(
-      "Kako se kaže životinja na norveškom",
-      "hangman",
-      ['d', 'd', 'y', 'r'],
-    ),
-    new Question(
-      "U koju skupinu slova spadaju slova Æ, Ø i Å?",
-      "radio",
-      "samoglasnici",
-      {answers: ["Samoglasnici", "Suglasnici", "Niti jednu od navedenih"]},
-    ),
-    new Question(
-      "Koju varijantu norveškog jezika ćemo učiti?",
-      "radio",
-      "bokmål",
-      {answers: ["Riksmål", "Nynorsk", "Bokmål", "Neunorsk"]}
-    ),
-    new Question(
-      "Navedi jedan novi glas koji se pojavljuje u norveškom.",
-      "input",
-      "^[åøæ]{1}$"
-    ),*/
+    ), /*
+     new Question(
+     "Kako se kaže životinja na norveškom",
+     "hangman",
+     ['d', 'd', 'y', 'r'],
+     ),
+     new Question(
+     "U koju skupinu slova spadaju slova Æ, Ø i Å?",
+     "radio",
+     "samoglasnici",
+     {answers: ["Samoglasnici", "Suglasnici", "Niti jednu od navedenih"]},
+     ),
+     new Question(
+     "Koju varijantu norveškog jezika ćemo učiti?",
+     "radio",
+     "bokmål",
+     {answers: ["Riksmål", "Nynorsk", "Bokmål", "Neunorsk"]}
+     ),
+     new Question(
+     "Navedi jedan novi glas koji se pojavljuje u norveškom.",
+     "input",
+     "^[åøæ]{1}$"
+     ),*/
   ];
 
   initializeLessonList() {
@@ -166,12 +168,15 @@ export class LessonService {
 
   }
 
-  updateAvailableLessons(name: string){
-    let uid = this.userService.current_user.uid;
-    let token = JSON.parse(window.localStorage.getItem('firebase:authUser:AIzaSyDYgOyH3PI85yE47QYAhT6ajfadRqmxKtM:[DEFAULT]')).stsTokenManager.accessToken;
-    this.userService.current_user.setLesson(name);
-    this.http.patch(`https://zavrsni-rad-f80a0.firebaseio.com/users/${uid}.json?auth=${token}`, '{"available_lessons": '+ JSON.stringify(this.userService.current_user.getAvailableLessons()) +'}').subscribe();
-
+  updateAvailableLessons(name: string) {
+    if (this.userService.current_user.getAvailableLessons().indexOf(name) == -1) {
+      let uid = this.userService.current_user.uid;
+      let token = JSON.parse(window.localStorage.getItem('firebase:authUser:AIzaSyDYgOyH3PI85yE47QYAhT6ajfadRqmxKtM:[DEFAULT]')).stsTokenManager.accessToken;
+      this.userService.current_user.setLesson(name);
+      this.http.patch(`https://zavrsni-rad-f80a0.firebaseio.com/users/${uid}.json?auth=${token}`, '{"available_lessons": ' + JSON.stringify(this.userService.current_user.getAvailableLessons()) + '}').subscribe();
+    }
   }
+
+
 
 }

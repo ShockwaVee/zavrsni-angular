@@ -36,7 +36,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   @ViewChild('answer') answer_array;
   @ViewChild('available') available_array;
 
-  constructor(private lessonService: LessonService, private userService: UserService, private route: ActivatedRoute, private router: Router, private renderer: Renderer2) {
+  constructor(private lessonService: LessonService, private route: ActivatedRoute, private router: Router, private renderer: Renderer2) {
   }
 
   ngOnInit() {
@@ -167,6 +167,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       if (this.correct_guesses == this.current_question.correct_answer.length) {
         this.unlisten.forEach((e) => e());
         this.quiz_solved = true;
+        this.attempted_solve = [];
       } else {
         this.correct_guesses = 0;
       }

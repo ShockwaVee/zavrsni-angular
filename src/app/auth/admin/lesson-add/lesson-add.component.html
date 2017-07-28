@@ -2,14 +2,28 @@
   <div class="col-xs-12">
     <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="row">
-        <div class="col-xs-12">
+        <span *ngIf="fewQuestions" class="help-block text-center">Lekcija mora imati barem jedno pitanje</span>
+        <div class="col-xs-8">
           <div class="form-group">
-            <label for="type">Tip</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Naslov lekcije*"
+              required
+              ngModel
+              class="form-control">
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="form-group">
             <select
               id="type"
               class="form-control"
+              required
               name="type"
               ngModel>
+              <option value="" disabled selected>Tip lekcije*</option>
               <option name="grammar" id="grammar" value="gramatika">Gramatika</option>
               <option name="vocabulary" id="vocabulary" value="vokabular">Vokabular</option>
             </select>
@@ -17,79 +31,80 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-4">
           <div class="form-group">
-            <label for="name">Naslov</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              ngModel
-              class="form-control">
+             <textarea
+               type="text"
+               placeholder="Opis lekcije*"
+               id="description"
+               required
+               class="form-control"
+               name="description"
+               ngModel
+               rows="3"></textarea>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-8">
           <div class="form-group">
-            <label for="name">Opis</label>
-            <input
-              type="text"
-              id="description"
-              name="description"
-              ngModel
-              class="form-control">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form-group">
-            <label for="description">Tekst lekcije</label>
             <textarea
               type="text"
+              placeholder="HTML lekcije*"
               id="lessonText"
               class="form-control"
+              required
               name="lessonText"
               ngModel
-              rows="6"></textarea>
+              rows="3"></textarea>
           </div>
         </div>
       </div>
 
       <div class="row">
         <div class="col-xs-12">
+          <h3>Pitanja lekcije</h3>
+        </div>
+        <div class="col-xs-11 col-xs-offset-1 questions">
           <div *ngFor="let question of questionsArray; let i=index">
+            <h4>{{i+1}}. pitanje</h4>
             <div class="form-group">
-              <label>Pitanje</label>
               <input
                 type="text"
                 name="question{{i}}"
+                placeholder="Pitanje*"
+                required
                 ngModel
                 class="form-control">
             </div>
             <div class="form-group">
-              <label>Tip</label>
-              <input
-                type="text"
+              <select
+                class="form-control"
+                required
+                name="type"
                 name="type{{i}}"
-                ngModel
-                class="form-control">
+                ngModel>
+                <option value="" disabled selected>Tip pitanja*</option>
+                <option name="radio" id="radio" value="radio">Radio</option>
+                <option name="input" id="input" value="input">Input</option>
+                <option name="hangman" id="hangman" value="hangman">Hangman</option>
+                <option name="guess" id="guess" value="guess">Guess</option>
+                <option name="rearrange" id="rearrange" value="rearrange">Rearrange</option>
+              </select>
             </div>
             <div class="form-group">
-              <label>Točan odgovor</label>
               <input
                 type="text"
+                placeholder="Točan odgovor*"
                 name="correctAnswer{{i}}"
+                required
                 ngModel
                 class="form-control">
             </div>
             <div class="row">
               <div class="col-xs-12">
                 <div class="form-group">
-                  <label>Poveznica slike</label>
                   <input
                     type="url"
+                    placeholder="Poveznica slike"
                     name="imgURL{{i}}"
                     ngModel
                     class="form-control">
@@ -97,26 +112,30 @@
               </div>
             </div>
             <div class="form-group">
-              <label>Odgovori</label>
+              <h4>Potencijalni odgovori</h4>
               <div *ngFor="let answer of answersArray[i];let j=index">
                 <input
                   type="text"
+                  placeholder="Odgovor*"
+                  required
                   name="answer-{{i}}-{{j}}"
                   ngModel
                   class="form-control">
               </div>
             </div>
-
-            <button type="button" (click)="onAddAnswer(i)">Dodaj odgovor</button>
+            <button type="button" class="btn btn-primary" (click)="onAddAnswer(i)">Dodaj odgovor</button>
+            <hr>
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-xs-12">
-          <button type="button" (click)="onAddQuestion()">Dodaj pitanje</button>
+          <button type="button" class="btn btn-primary" (click)="onAddQuestion()">Dodaj pitanje</button>
         </div>
       </div>
-      <button type="submit">Dodaj lekciju</button>
+      <div class="form-actions">
+        <button class="btn btn-success col-xs-3" [disabled]="!f.valid" type="submit">Dodaj lekciju</button>
+      </div>
     </form>
   </div>
 </div>

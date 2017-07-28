@@ -1,0 +1,27 @@
+.form-actions {
+  margin: 0;
+  background-color: transparent;
+  text-align: center;
+}
+
+.form-actions button {
+  float: none;
+}
+
+textarea {
+  resize: none;
+}
+
+h3 {
+  margin-top: 0px;
+}
+
+.questions {
+  margin-bottom: 12px;
+}
+
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+

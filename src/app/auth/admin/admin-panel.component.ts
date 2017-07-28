@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {LessonService} from "../../lesson.service";
 import {Lesson} from "../../lesson/lesson.model";
+import {Subscription} from "rxjs/Subscription";
+import {Subject} from "rxjs/Subject";
 
 @Component({
   selector: 'app-admin-panel',
@@ -12,11 +14,19 @@ export class AdminPanelComponent implements OnInit {
   listVocabulary: Array<Lesson> = [];
   addMode: boolean = false;
 
+  subscription = new Subscription();
+  newLesson = new Subject();
+
   @ViewChild('button_add') button_add;
 
   constructor(private lessonService: LessonService) { }
 
   ngOnInit() {
+    this.subscription = this.lessonService.lessonAdded.subscribe((lesson: Lesson)=>{
+      if (lesson.type == 'gramatika')
+        this.listGrammar.push(lesson);
+      else this.listVocabulary.push(lesson);
+    });
     this.listGrammar = this.lessonService.getLessonList('gramatika');
     this.listVocabulary = this.lessonService.getLessonList('vokabular');
   }
