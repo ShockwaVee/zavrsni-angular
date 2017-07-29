@@ -71,7 +71,7 @@
     </div>
     <div *ngIf="state==='finished'">
       <img class="center-block" src="assets/congrats.gif" alt="">
-      <button class="btn btn-primary" (click)="onNextLesson()">sljedeća lekcija</button>
+      <button class="btn btn-primary" *ngIf="next_lesson" (click)="onNextLesson()">sljedeća lekcija</button>
     </div>
   </div>
 </div>

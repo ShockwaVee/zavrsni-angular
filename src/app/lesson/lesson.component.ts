@@ -49,7 +49,11 @@ export class LessonComponent implements OnInit, OnDestroy {
     );
     this.subscription_lesson = this.route.params.subscribe((params: Params) => {
       this.current_lesson = this.lessonService.getLesson(params['name']);
-      this.next_lesson = this.lessonService.currentLessonList[this.lessonService.currentLessonList.indexOf(this.current_lesson) + 1];
+      if (this.lessonService.currentLessonList[this.lessonService.currentLessonList.indexOf(this.current_lesson) + 1] != null) {
+        this.next_lesson = this.lessonService.currentLessonList[this.lessonService.currentLessonList.indexOf(this.current_lesson) + 1];
+      } else {
+        this.next_lesson = null;
+      }
       this.setLessonText();
       this.index = 0;
       this.question_changed.next(this.current_lesson.questions[this.index]);
@@ -112,8 +116,10 @@ export class LessonComponent implements OnInit, OnDestroy {
 
   finishedQuiz() {
     this.state = 'finished';
-    this.lessonService.updateAvailableLessons(this.next_lesson.name);
-    this.lessonService.getLesson(this.next_lesson.name).available = true;
+    if (this.next_lesson != null) {
+      this.lessonService.updateAvailableLessons(this.next_lesson.name);
+      this.lessonService.getLesson(this.next_lesson.name).available = true;
+    }
     this.index = 0;
   }
 

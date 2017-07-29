@@ -58,9 +58,12 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   }
 
   onDelete(lessonName: string, lessonType: string, index: number) {
+    let nextLesson: string;
     if (lessonType == 'gramatika') {
+      nextLesson = this.lessonService.listGrammar[1].name;
       this.lessonService.listGrammar.splice(index, 1);
     } else {
+      nextLesson = this.lessonService.listVocabulary[1].name;
       this.lessonService.listVocabulary.splice(index, 1);
     }
     this.lessonService.lessonList.forEach((e, i) => {
@@ -69,23 +72,25 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
       }
     });
     this.lessonService.lessonChanged.next('delete');
-    if (index == 0) {
-      if (this.userService.current_user.getAvailableLessons().indexOf(lessonName) != -1) {
-        this.userService.current_user.removeLesson(lessonName);
-      }
-      this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/users.json?auth=${this.authService.token}`).subscribe((response) => {
-        let data = response.json();
-        for (var user in data) {
-          if (data.hasOwnProperty(user)) {
-            let lessonList = data[user].available_lessons;
-            if (lessonList.indexOf(lessonName) != -1) {
-              lessonList.splice(lessonList.indexOf(lessonName), 1);
-              this.http.patch(`https://zavrsni-rad-f80a0.firebaseio.com/users/${data[user].uid}.json?auth=${this.authService.token}`, '{"available_lessons": ' + JSON.stringify(lessonList) + '}').subscribe();
+
+    if (this.userService.current_user.getAvailableLessons().indexOf(lessonName) != -1) {
+      this.userService.current_user.removeLesson(lessonName);
+    }
+    this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/users.json?auth=${this.authService.token}`).subscribe((response) => {
+      let data = response.json();
+      for (var user in data) {
+        if (data.hasOwnProperty(user)) {
+          let lessonList = data[user].available_lessons;
+          if (lessonList.indexOf(lessonName) != -1) {
+            lessonList.splice(lessonList.indexOf(lessonName), 1);
+            if (index == 0 && lessonList.indexOf(nextLesson) == -1) {
+              lessonList.push(nextLesson);
             }
+            this.http.patch(`https://zavrsni-rad-f80a0.firebaseio.com/users/${data[user].uid}.json?auth=${this.authService.token}`, '{"available_lessons": ' + JSON.stringify(lessonList) + '}').subscribe();
           }
         }
-      });
-    }
+      }
+    });
   }
 
   onEdit(type: string, index: number) {
