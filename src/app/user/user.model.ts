@@ -27,4 +27,12 @@ export class User {
     this.available_lessons.push(lesson_name);
   }
 
+  removeLesson(lesson_name: string){
+    this.available_lessons.forEach((e, i) =>{
+      if (e == lesson_name){
+        this.available_lessons.splice(i, 1);
+      }
+    })
+  }
+
 }

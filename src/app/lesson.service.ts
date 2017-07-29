@@ -12,8 +12,12 @@ export class LessonService {
   }
 
   public lessonList: Lesson[];
+  public listGrammar: Array<Lesson> = [];
+  public listVocabulary: Array<Lesson> = [];
   public currentLessonList;
-  lessonAdded = new Subject<Lesson>();
+  lessonChanged = new Subject<string>();
+  pendingLesson: Lesson;
+  editMode: boolean;
 
 
   questions: Question[] = [
@@ -141,6 +145,8 @@ export class LessonService {
         "vokabular"
       )
     ]);
+    this.listGrammar = this.getLessonList('gramatika');
+    this.listVocabulary = this.getLessonList('vokabular');
   }
 
 
@@ -165,7 +171,10 @@ export class LessonService {
     this.lessonList.forEach((lesson) => {
       if (this.userService.current_user.getAvailableLessons().indexOf(lesson.name) != -1) lesson.available = true;
     });
+  }
 
+  updateLesson(lesson: Lesson, index: number) {
+    this.lessonList[index] = lesson;
   }
 
   updateAvailableLessons(name: string) {
@@ -176,7 +185,6 @@ export class LessonService {
       this.http.patch(`https://zavrsni-rad-f80a0.firebaseio.com/users/${uid}.json?auth=${token}`, '{"available_lessons": ' + JSON.stringify(this.userService.current_user.getAvailableLessons()) + '}').subscribe();
     }
   }
-
 
 
 }

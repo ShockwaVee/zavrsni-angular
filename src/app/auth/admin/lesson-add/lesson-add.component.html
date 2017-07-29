@@ -65,7 +65,12 @@
         </div>
         <div class="col-xs-11 col-xs-offset-1 questions">
           <div *ngFor="let question of questionsArray; let i=index">
-            <h4>{{i+1}}. pitanje</h4>
+            <div class="col-md-1">
+              <h4>{{i+1}}. pitanje</h4>
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-danger" type="button" (click)="onDelete('question', i)">Obriši</button>
+            </div>
             <div class="form-group">
               <input
                 type="text"
@@ -111,17 +116,22 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-12">
               <h4>Potencijalni odgovori</h4>
-              <div *ngFor="let answer of answersArray[i];let j=index">
-                <input
-                  type="text"
-                  placeholder="Odgovor*"
-                  required
-                  name="answer-{{i}}-{{j}}"
-                  ngModel
-                  class="form-control">
-              </div>
+              <div class="col-md-12 form-group" *ngFor="let answer of answersArray[i];let j=index">
+                  <div class="col-md-11">
+                    <input
+                      type="text"
+                      placeholder="Odgovor*"
+                      required
+                      name="answer-{{i}}-{{j}}"
+                      ngModel
+                      class="form-control">
+                  </div>
+                  <div class="col-md-1">
+                    <button class="btn btn-danger" type="button" (click)="onDelete('answer', j, i)">Obriši</button>
+                  </div>
+                </div>
             </div>
             <button type="button" class="btn btn-primary" (click)="onAddAnswer(i)">Dodaj odgovor</button>
             <hr>

@@ -59,7 +59,7 @@ div.edit {
   margin-right: 8px;
 }
 
-router-outlet {
+app-lesson-add {
   margin-top: 12px;
 }
 
