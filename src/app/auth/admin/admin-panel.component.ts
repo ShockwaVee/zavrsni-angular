@@ -57,13 +57,13 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
     this.listVocabulary = this.lessonService.listVocabulary;
   }
 
-  onDelete(lessonName: string, lessonType: string, index: number) {
-    let nextLesson: string;
+  onDelete(lessonName: string, lessonType: string, index: number, lessonKey: string) {
+    let nextLesson: string = "";
     if (lessonType == 'gramatika') {
-      nextLesson = this.lessonService.listGrammar[1].name;
+      if (this.lessonService.listGrammar[1] != null) nextLesson = this.lessonService.listGrammar[1].name;
       this.lessonService.listGrammar.splice(index, 1);
     } else {
-      nextLesson = this.lessonService.listVocabulary[1].name;
+      if (this.lessonService.listVocabulary[1] != null) nextLesson = this.lessonService.listVocabulary[1].name;
       this.lessonService.listVocabulary.splice(index, 1);
     }
     this.lessonService.lessonList.forEach((e, i) => {
@@ -71,6 +71,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
         this.lessonService.lessonList.splice(i, 1);
       }
     });
+    this.http.delete(`https://zavrsni-rad-f80a0.firebaseio.com/lessons/${lessonKey}.json?auth=${this.authService.token}`).subscribe();
     this.lessonService.lessonChanged.next('delete');
 
     if (this.userService.current_user.getAvailableLessons().indexOf(lessonName) != -1) {
@@ -83,7 +84,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
           let lessonList = data[user].available_lessons;
           if (lessonList.indexOf(lessonName) != -1) {
             lessonList.splice(lessonList.indexOf(lessonName), 1);
-            if (index == 0 && lessonList.indexOf(nextLesson) == -1) {
+            if (index == 0 && lessonList.indexOf(nextLesson) == -1 && nextLesson != "") {
               lessonList.push(nextLesson);
             }
             this.http.patch(`https://zavrsni-rad-f80a0.firebaseio.com/users/${data[user].uid}.json?auth=${this.authService.token}`, '{"available_lessons": ' + JSON.stringify(lessonList) + '}').subscribe();

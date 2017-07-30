@@ -1,10 +1,12 @@
 import {Injectable} from "@angular/core";
 
+
 import {Lesson} from "./lesson/lesson.model";
 import {UserService} from "./user/user.service";
 import {Question} from "./lesson/question.model";
-import {Http} from "@angular/http";
+import {Http, Response} from "@angular/http";
 import {Subject} from "rxjs/Subject";
+import 'rxjs/Rx';
 
 @Injectable()
 export class LessonService {
@@ -56,95 +58,23 @@ export class LessonService {
      ),*/
   ];
 
-  initializeLessonList() {
-    this.setLessonList([
-      new Lesson(
-        "izgovor",
-        "Nauči kako izgovarati norveška slova",
-        `<div class='col-xs-12'><p>U Norveškoj su najkorištenije dvije vrste norveškog jezika, a to su bokmål i nynorsk. Mi ćemo učiti bokmål varijantu (knjiški jezik) jer je rasprostranjeniji.</p>
-          <p>U ovoj lekciji upoznat ćeš se s norveškom abecedom. </p>
-          <p>Norveška je abeceda vrlo slična engleskoj abecedi, no ima nekoliko glasova koje ne viđamo niti u hrvatskom niti u engleskom jeziku. <br>
 
-          Vrlo je bitno naučiti kako se izgovaraju sva slova jer postoje razne iznimke koje utječu na to kako će riječ zvučati.</p>
+  /*getLessonsFromDB() {
+    return this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/lessons.json?auth=${this.authService.token}`).map((response: Response) => {
+      const data = response.json();
+      return data;
+    });
+  }*/
 
-          <p>Norveška abeceda izgleda ovako:</p>
-          <h2 class="text-center">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Æ Ø Å</h2>
-          <br>
-          <p>Na kraju vidimo 3 slova koji ti vjerojatno nisu poznati, a to su:</p>
-          <ul>
-            <li><span class="pronounce">æ</span> (<span class="pronounce">bære</span>)</li>
-            <li><span class="pronounce">ø</span> (<span class="pronounce">brød</span>)</li>
-            <li><span class="pronounce">å</span> (<span class="pronounce">går</span>)</li>
-          </ul>
-          <p class="help-block">Možeš kliknuti na riječ ili slovo kako bi čuo izgovor riječi.</p>
-          <br>
-          <p>Ta su tri slova, u norveškom jeziku, samoglasnici. <br>
-          Ostali samoglasnici su a, e, i, o, u i y. Sva ostala slova su suglasnici.</p>
-          <br>
-          <p>U nastavku ćeš naučiti i riječi s tim slovima, ali i iznimke kod izgovaranja određenih kombinacija slova.</p>
-
-          <p class="text-center help-block">Klikni ovdje kako bi pristupio kvizu.</p>
-        </div>`,
-        this.questions,
-        "gramatika"
-      ),
-      new Lesson(
-        "Drugi",
-        "Opis drugi lessona",
-        "nema random sranja",
-        this.questions,
-        "gramatika"
-      ),
-      new Lesson(
-        "Treci",
-        "Opis treceg lessona",
-        "nema random sranja",
-        this.questions,
-        "vokabular"
-      ),
-      new Lesson(
-        "Cetvrti",
-        "Opis cetvrtog lessona",
-        "nema random sranja",
-        this.questions,
-        "interpunkcija"
-      ),
-      new Lesson(
-        "Peti",
-        "Opis petog lessona",
-        "nema random sranja",
-        this.questions,
-        "gramatika"
-      ),
-      new Lesson(
-        "Sesti",
-        "Opis sestog lessona",
-        "nema random sranja",
-        this.questions,
-        "gramatika"
-      ),
-      new Lesson(
-        "Sedmi",
-        "Opis sedmog lessona",
-        "nema random sranja",
-        this.questions,
-        "vokabular"
-      ),
-      new Lesson(
-        "Osmi",
-        "Opis osmog lessona",
-        "nema random sranja",
-        this.questions,
-        "interpunkcija"
-      ),
-      new Lesson(
-        "Deveti",
-        "Opis devetog lessona",
-        "nema random sranja",
-        this.questions,
-        "vokabular"
-      )
-    ]);
+  initializeLessonList(lessonList: Array<Lesson>) {
+    /*this.getLessonsFromDB().subscribe(
+      (lessons: any[]) => {
+        console.log(lessons);
+      },
+      (error) => {
+        console.log(error)
+      });*/
+    this.setLessonList(lessonList);
     this.listGrammar = this.getLessonList('gramatika');
     this.listVocabulary = this.getLessonList('vokabular');
   }

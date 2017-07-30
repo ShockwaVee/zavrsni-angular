@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
 import * as firebase from 'firebase';
-import {Http} from "@angular/http";
+import {Http, Response} from "@angular/http";
 import {UserService} from "../user/user.service";
 import {User} from "../user/user.model";
 import {LessonService} from "../lesson.service";
 import {Router} from "@angular/router";
+import 'rxjs/Rx'
+import {Lesson} from "../lesson/lesson.model";
+import {Question} from "../lesson/question.model";
 
 @Injectable()
 export class AuthService {
@@ -12,7 +15,7 @@ export class AuthService {
   uid: string;
   admin_rights: boolean;
 
-  constructor(private http: Http, private userService: UserService, private lessonService: LessonService, private router: Router) {
+  constructor(private lessonService: LessonService, private http: Http, private userService: UserService, private router: Router) {
   }
 
   signUpUser(email: string, password: string, name: string, surname: string) {
@@ -39,7 +42,7 @@ export class AuthService {
     })).catch(error => console.log(error));
   }
 
-  getToken(){
+  getToken() {
     return this.token;
   }
 
@@ -52,15 +55,39 @@ export class AuthService {
 
   getUserFromDB(uid: string) {
     this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/users/${uid}.json?auth=${this.token}`).subscribe((response) => {
+      let lessonList: Array<Lesson> = [];
       let data = response.json();
-        let name = data.name;
-        let surname = data.surname;
-        let available_lessons = data.available_lessons;
-        this.admin_rights = data.admin_rights;
-        let user = new User(name, surname, available_lessons, uid, this.admin_rights);
-        this.userService.setUser(user);
-        this.lessonService.initializeLessonList();
-        this.router.navigate(['/gramatika']);
+      let name = data.name;
+      let surname = data.surname;
+      let available_lessons = data.available_lessons;
+      this.admin_rights = data.admin_rights;
+      let user = new User(name, surname, available_lessons, uid, this.admin_rights);
+      this.userService.setUser(user);
+      this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/lessons.json?auth=${this.token}`).map((response: Response) => {
+        const data = response.json();
+        return data;
+      }).subscribe(
+        (lessons: any[]) => {
+          for (let lessonKey in lessons) {
+            let key = lessonKey;
+            let name = lessons[key].name;
+            let description = lessons[key].description;
+            let lesson_text = lessons[key].lesson_text;
+            let type = lessons[key].type;
+            let questions = lessons[key].questions.map((question) => {
+              return new Question(question.question, question.type, question.correct_answer, {
+                answers: question.answers ? question.answers : null,
+                img: question.image ? question.image : null
+              });
+            });
+            lessonList.push(new Lesson(name, description, lesson_text, questions, type, key));
+          }
+          this.lessonService.initializeLessonList(lessonList);
+          this.router.navigate(['/gramatika']);
+        },
+        (error) => {
+          console.log(error)
+        });
     });
   }
 

@@ -3,7 +3,7 @@
   <div class="col-md-6">
     <h2 class="text-center">Gramatika</h2>
     <div class="col-md-12" *ngFor="let lesson of listGrammar; let i=index">
-      <div class="delete pull-right col-md-1" (click)="onDelete(lesson.name, lesson.type, i)"></div>
+      <div class="delete pull-right col-md-1" (click)="onDelete(lesson.name, lesson.type, i, lesson.key)"></div>
       <a class="list-group-item clearfix" style="cursor: pointer;" (click)="onEdit(lesson.type, i)"
          routerLinkActive="active">
         <div class="pull-left">
@@ -19,7 +19,7 @@
   <div class="col-md-6">
     <h2 class="text-center">Vokabular</h2>
     <div class="col-md-12" *ngFor="let lesson of listVocabulary; let i=index">
-      <div class="delete pull-right col-md-1" (click)="onDelete(lesson.name, lesson.type, i)"></div>
+      <div class="delete pull-right col-md-1" (click)="onDelete(lesson.name, lesson.type, i, lesson.key)"></div>
       <a class="list-group-item clearfix" style="cursor: pointer;" (click)="onEdit(lesson.type, i)"
          routerLinkActive="active">
         <div class="pull-left">

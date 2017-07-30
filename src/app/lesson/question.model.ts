@@ -17,11 +17,16 @@ export class Question {
       this.image = params.img;
     }
     if (type === 'rearrange') {
-      this.shuffled_array = correct_answer.slice();
-      for (let i = this.shuffled_array.length; i; i--) {
-        let j = Math.floor(Math.random() * i);
-        [this.shuffled_array[i - 1], this.shuffled_array[j]] = [this.shuffled_array[j], this.shuffled_array[i - 1]];
-      }
+      this.shuffleArray();
+    }
+
+  }
+
+  shuffleArray(){
+    this.shuffled_array = this.correct_answer.slice();
+    for (let i = this.shuffled_array.length; i; i--) {
+      let j = Math.floor(Math.random() * i);
+      [this.shuffled_array[i - 1], this.shuffled_array[j]] = [this.shuffled_array[j], this.shuffled_array[i - 1]];
     }
 
   }

@@ -55,7 +55,7 @@ export class LessonAddComponent implements OnInit, OnDestroy, OnChanges {
     this.questionsArray = [];
     this.lessonEdited.questions.forEach((question, index) => {
       this.questionsArray.push(question);
-      if (question.answers != null) this.answersArray[index].push(question.answers);
+      if (question.answers != null) this.answersArray[index] = question.answers;
     });
     setTimeout(() => {
       let form = this.f.form.controls;
@@ -67,7 +67,8 @@ export class LessonAddComponent implements OnInit, OnDestroy, OnChanges {
       for (let i = 0; i < this.questionsArray.length; i++) {
         form['question' + i].setValue(this.lessonEdited.questions[i].question);
         form['type' + i].setValue(this.lessonEdited.questions[i].type);
-        form['correctAnswer' + i].setValue(this.lessonEdited.questions[i].correct_answer);
+        if (this.lessonEdited.questions[i].type == 'hangman') form['correctAnswer' + i].setValue(this.lessonEdited.questions[i].correct_answer.join(''));
+        else form['correctAnswer' + i].setValue(this.lessonEdited.questions[i].correct_answer);
         if (this.lessonEdited.questions[i].image != null) {
           form['imgURL' + i].setValue(this.lessonEdited.questions[i].image);
         }
@@ -85,7 +86,7 @@ export class LessonAddComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   onSubmit(form: NgForm) {
-    if (this.questionsArray.length > 0) {
+    if (this.questionsArray.length > 1) {
       this.fewQuestions = false;
       let value = form.value;
       let name = value.name;
@@ -97,7 +98,10 @@ export class LessonAddComponent implements OnInit, OnDestroy, OnChanges {
         this.questionsArray[i].type = form.value['type' + i];
         if (this.questionsArray[i].type == 'rearrange') {
           this.questionsArray[i].correct_answer = String(form.value['correctAnswer' + i]).split(',');
-          console.log(String(form.value['correctAnswer' + i]).split(','));
+          this.questionsArray[i].shuffleArray();
+        }
+        else if (this.questionsArray[i].type == 'hangman') {
+          this.questionsArray[i].correct_answer = String(form.value['correctAnswer' + i]).split('');
         }
         else {
           this.questionsArray[i].correct_answer = form.value['correctAnswer' + i];
@@ -125,17 +129,20 @@ export class LessonAddComponent implements OnInit, OnDestroy, OnChanges {
         'type': type
       };
       let lesson: Lesson = new Lesson(name, description, lessonText, this.questionsArray, type);
+      if (this.lessonEdited != null) lesson.available = this.lessonEdited.available
       this.lessonService.pendingLesson = lesson;
       this.lessonService.lessonList.forEach((e, i) => {
         if (e.name == name) {
+          this.http.put(`https://zavrsni-rad-f80a0.firebaseio.com/lessons/${this.lessonEdited.key}.json?auth=${this.authService.token}`, post_object).subscribe();
           this.lessonService.editMode = true;
           this.lessonService.lessonChanged.next('edit');
           this.lessonService.updateLesson(lesson, i);
-          console.log(this.lessonService.lessonList);
         }
       });
       if (!this.lessonService.editMode) {
-        this.http.post(`https://zavrsni-rad-f80a0.firebaseio.com/lessons.json?auth=${token}`, post_object).subscribe();
+        this.http.post(`https://zavrsni-rad-f80a0.firebaseio.com/lessons.json?auth=${token}`, post_object).subscribe((response) => {
+          lesson.key = response.json().name
+        });
         this.lessonService.lessonChanged.next('add');
       }
       this.lessonService.editMode = false;
@@ -152,7 +159,7 @@ export class LessonAddComponent implements OnInit, OnDestroy, OnChanges {
 
   onDelete(type: string, index: number, subindex?: number) {
     if (type == 'question') this.questionsArray.splice(index, 1);
-    else this.answersArray[subindex].splice(index, 1);
+    else this.answersArray[index].splice(subindex, 1);
 
   }
 

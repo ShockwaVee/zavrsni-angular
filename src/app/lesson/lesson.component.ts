@@ -74,8 +74,15 @@ export class LessonComponent implements OnInit, OnDestroy {
   onSubmit(form: NgForm) {
     const value = form.value;
     if (this.current_question.type == 'hangman' || this.current_question.type == 'rearrange') {
-      this.index++;
-      this.question_changed.next(this.current_lesson.questions[this.index]);
+      if (this.index != this.current_lesson.questions.length - 1) {
+        if (this.current_question.type == 'rearrange') {
+          this.answer_array.nativeElement.innerHTML = '';
+        }
+        this.index++;
+        this.question_changed.next(this.current_lesson.questions[this.index]);
+      } else {
+        this.finishedQuiz();
+      }
     }
     else {
       let re = new RegExp(this.current_question.correct_answer);
