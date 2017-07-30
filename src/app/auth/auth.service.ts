@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import * as firebase from 'firebase';
+import {Injectable} from "@angular/core";
+import * as firebase from "firebase";
 import {Http, Response} from "@angular/http";
 import {UserService} from "../user/user.service";
 import {User} from "../user/user.model";
 import {LessonService} from "../lesson.service";
 import {Router} from "@angular/router";
-import 'rxjs/Rx'
+import "rxjs/Rx";
 import {Lesson} from "../lesson/lesson.model";
 import {Question} from "../lesson/question.model";
 

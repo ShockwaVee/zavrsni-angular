@@ -1,9 +1,7 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {LessonService} from "../../lesson.service";
 import {Lesson} from "../../lesson/lesson.model";
 import {Subscription} from "rxjs/Subscription";
-import {Subject} from "rxjs/Subject";
-import {Question} from "../../lesson/question.model";
 import {Http} from "@angular/http";
 import {AuthService} from "../auth.service";
 import {UserService} from "../../user/user.service";
@@ -122,18 +120,6 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-
-    /*
-     od tud obrisat ova svakakva nepotrebna sranja
-     implementat ondelete gumbice za question i answer da ne bi bilo da neko sjebe
-     dodat edit mode, da kad kliknes te ne redirecta na taj lesson nego ti loada formu s tim vrijednostima (ako bu islo)
-     post requestovi idu gore, tak da jebiga, moras sa forom najt property pa onda picit dalje
-     dodat select za tip questiona
-     trim lowercase na tocan odgovor i ime lekcije
-     malo uredit da izgleda kak bog zapoveda
-     i slozit da se doda u lesson list, u serviceu dodat neku metodu koja prima lesson, tak je brijem ez
-     auth guard za taj admin panel i gg, mislim da nemas vise nis, heheh
-     */
   }
 
 }

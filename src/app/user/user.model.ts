@@ -8,10 +8,6 @@ export class User {
 
 
   constructor(name, surname, available_lessons, uid, admin_rights) {
-    /*kod sign upa budemo na bazi napravili novog usera s pripadajucim id-om, challenge points na 0 i defaultno za available lessons
-    u tom slucaju ja dajem te parametre
-    kod sign ina vucem podatke iz baze i predajem ih ovom konstruktoru, on onda s tim podacima inicijalizira current usera i sve kaj treba
-     */
     this.name = name;
     this.surname = surname;
     this.available_lessons = available_lessons;
@@ -23,13 +19,13 @@ export class User {
     return this.available_lessons;
   }
 
-  setLesson(lesson_name: string){
+  setLesson(lesson_name: string) {
     this.available_lessons.push(lesson_name);
   }
 
-  removeLesson(lesson_name: string){
-    this.available_lessons.forEach((e, i) =>{
-      if (e == lesson_name){
+  removeLesson(lesson_name: string) {
+    this.available_lessons.forEach((e, i) => {
+      if (e == lesson_name) {
         this.available_lessons.splice(i, 1);
       }
     })

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core";
 import {UserService} from "../user/user.service";
 import {AuthService} from "../auth/auth.service";
 
@@ -9,7 +9,8 @@ import {AuthService} from "../auth/auth.service";
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private userService: UserService, private authService: AuthService) { }
+  constructor(private userService: UserService, private authService: AuthService) {
+  }
 
   ngOnInit() {
   }
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit {
     return this.authService.isAuthenticated();
   }
 
-  isAdmin(){
+  isAdmin() {
     return this.authService.admin_rights;
   }
 

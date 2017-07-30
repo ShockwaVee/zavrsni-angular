@@ -1,4 +1,4 @@
-import { Question } from './question.model';
+import {Question} from "./question.model";
 
 export class Lesson{
   public key: string;

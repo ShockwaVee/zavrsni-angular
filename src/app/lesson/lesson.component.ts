@@ -1,13 +1,12 @@
-import {Component, ViewChild, OnDestroy, OnInit, Renderer2} from "@angular/core";
+import {Component, OnDestroy, OnInit, Renderer2, ViewChild} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {Subject} from "rxjs/Subject";
 import {Subscription} from "rxjs/Subscription";
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 import {Lesson} from "./lesson.model";
 import {Question} from "./question.model";
-import {LessonService} from '../lesson.service';
-import {UserService} from "../user/user.service";
+import {LessonService} from "../lesson.service";
 
 @Component({
   selector: "app-lesson",

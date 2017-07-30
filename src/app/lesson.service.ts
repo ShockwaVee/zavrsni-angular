@@ -4,9 +4,9 @@ import {Injectable} from "@angular/core";
 import {Lesson} from "./lesson/lesson.model";
 import {UserService} from "./user/user.service";
 import {Question} from "./lesson/question.model";
-import {Http, Response} from "@angular/http";
+import {Http} from "@angular/http";
 import {Subject} from "rxjs/Subject";
-import 'rxjs/Rx';
+import "rxjs/Rx";
 
 @Injectable()
 export class LessonService {

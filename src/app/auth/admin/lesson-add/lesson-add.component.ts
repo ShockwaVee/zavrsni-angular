@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {Question} from "../../../lesson/question.model";
 import {NgForm} from "@angular/forms";
 import {Lesson} from "../../../lesson/lesson.model";
@@ -112,7 +112,6 @@ export class LessonAddComponent implements OnInit, OnDestroy, OnChanges {
         if (this.answersArray[i] != null) {
           for (let j = 0; j < this.answersArray[i].length; j++) {
             this.answersArray[i][j] = form.value['answer-' + i + '-' + j];
-            //this.questionsArray[i].answers[j]=form.value['answer-'+i+'-'+j];
           }
 
           this.questionsArray[i].answers = this.answersArray[i];

@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from "@angular/core";
 
-import {LessonService} from '../lesson.service';
-import {Lesson} from '../lesson/lesson.model';
+import {LessonService} from "../lesson.service";
+import {Lesson} from "../lesson/lesson.model";
 import {ActivatedRoute, Params, Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
 
@@ -19,7 +19,7 @@ export class LessonListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.route.params.subscribe((params: Params) => {
-      let re = new RegExp("vokabular|gramatika|interpunkcija");
+      let re = new RegExp("vokabular|gramatika");
       if (re.test(params['type'])) {
         this.lessonList = this.lessonService.getLessonList(params['type']);
       }

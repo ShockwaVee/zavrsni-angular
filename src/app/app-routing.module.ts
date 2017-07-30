@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
-import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
+import {NgModule} from "@angular/core";
+import {RouterModule, Routes} from "@angular/router";
 
-import {LessonListComponent} from './lesson-list/lesson-list.component';
-import {LessonStartComponent} from './lesson-start/lesson-start.component';
-import {LessonComponent} from './lesson/lesson.component';
+import {LessonListComponent} from "./lesson-list/lesson-list.component";
+import {LessonStartComponent} from "./lesson-start/lesson-start.component";
+import {LessonComponent} from "./lesson/lesson.component";
 import {ProgressGuard} from "./lesson/progress-guard.service";
 import {SignupComponent} from "./auth/signup/signup.component";
 import {SigninComponent} from "./auth/signin/signin.component";

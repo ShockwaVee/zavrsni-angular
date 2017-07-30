@@ -7,25 +7,24 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Zavrsni</a>
+      <a class="navbar-brand" routerLink="/">Zavrsni</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li><a routerLink="/gramatika">Gramatika</a></li>
-        <li><a routerLink="/interpunkcija">Interpunkcija</a></li>
         <li><a routerLink="/vokabular">Vokabular</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a *ngIf="!isAuthenticated()" routerLink="/signin">Sign in</a></li>
-        <li><a *ngIf="!isAuthenticated()" routerLink="/signup">Sign up</a></li>
+        <li><a *ngIf="!isAuthenticated()" routerLink="/signin">Prijava</a></li>
+        <li><a *ngIf="!isAuthenticated()" routerLink="/signup">Registracija</a></li>
         <li><a
           routerLink="/admin"
           *ngIf="isAdmin()">Admin panel</a></li>
         <li><a
           (click)="onLogout()"
-          *ngIf="isAuthenticated()">Logout</a></li>
+          *ngIf="isAuthenticated()">Odjava</a></li>
       </ul>
 
     </div><!-- /.navbar-collapse -->
