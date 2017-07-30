@@ -35,6 +35,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   @ViewChild('hangman') hangman;
   @ViewChild('answer') answer_array;
   @ViewChild('available') available_array;
+  @ViewChild('used_letters') used_letters_node;
 
   constructor(private lessonService: LessonService, private route: ActivatedRoute, private router: Router, private renderer: Renderer2) {
   }
@@ -44,6 +45,7 @@ export class LessonComponent implements OnInit, OnDestroy {
       (question: Question) => {
         this.current_question = question;
         this.correct_guesses = 0;
+        this.used_letters = [];
         this.quiz_solved = false;
       }
     );
@@ -77,6 +79,12 @@ export class LessonComponent implements OnInit, OnDestroy {
       if (this.index != this.current_lesson.questions.length - 1) {
         if (this.current_question.type == 'rearrange') {
           this.answer_array.nativeElement.innerHTML = '';
+        }
+        if (this.current_question.type == 'hangman') {
+          this.used_letters_node.nativeElement.innerHTML = '';
+          for (let i = 0; this.current_question.correct_answer.length > i; i++) {
+            this.hangman.nativeElement.children[i].innerHTML = '_';
+          }
         }
         this.index++;
         this.question_changed.next(this.current_lesson.questions[this.index]);

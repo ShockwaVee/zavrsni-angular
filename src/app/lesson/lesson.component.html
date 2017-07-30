@@ -38,7 +38,7 @@
             </div>
             <button type="button" (click)="onCheck(f)">Provjeri</button>
           </div>
-          <div class="used-letters"></div>
+          <div #used_letters class="used-letters"></div>
         </div>
         <div *ngIf="current_question.type=='guess' ">
           <img class="img-responsive"
