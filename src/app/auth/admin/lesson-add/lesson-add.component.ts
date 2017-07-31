@@ -59,7 +59,6 @@ export class LessonAddComponent implements OnInit, OnDestroy, OnChanges {
     });
     setTimeout(() => {
       let form = this.f.form.controls;
-      console.log(form);
       form['name'].setValue(this.lessonEdited.name);
       form['type'].setValue(this.lessonEdited.type);
       form['description'].setValue(this.lessonEdited.description);

@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import * as firebase from "firebase";
-import {Http, Response} from "@angular/http";
+import {Http, Headers, Response} from "@angular/http";
 import {UserService} from "../user/user.service";
 import {User} from "../user/user.model";
 import {LessonService} from "../lesson.service";
@@ -54,7 +54,8 @@ export class AuthService {
   }
 
   getUserFromDB(uid: string) {
-    this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/users/${uid}.json?auth=${this.token}`).subscribe((response) => {
+    const headers = new Headers({'Access-Control-Expose-Headers' : 'Authorization'});
+    this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/users/${uid}.json?auth=${this.token}`, {headers: headers}).subscribe((response) => {
       let lessonList: Array<Lesson> = [];
       let data = response.json();
       let name = data.name;
