@@ -25,7 +25,7 @@ export class AuthService {
         name: name,
         surname: surname,
         admin_rights: false,
-        available_lessons: ['Prvi', 'izgovor', 'Cetvrti']
+        available_lessons: ['izgovor', 'životinje']
       };
       firebase.auth().currentUser.getIdToken().then((token: string) => {
         this.token = token;

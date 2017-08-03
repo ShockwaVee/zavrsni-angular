@@ -42,7 +42,7 @@
         </div>
         <div *ngIf="current_question.type=='guess' ">
           <img class="img-responsive"
-               src="https://upload.wikimedia.org/wikipedia/commons/e/e6/BLT_sandwich_on_toast.jpg" alt="">
+               src="{{current_question.image}}" alt="">
           <input #input_answer placeholder="Ovdje upiši odgovor" type="text" name="question" ngModel required/>
           <div class="keyboard">
             <button type="button" (click)="onEnterKey('æ', f)">Æ</button>
