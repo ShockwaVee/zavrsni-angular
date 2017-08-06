@@ -1,0 +1,11 @@
+.lesson {
+  border-left: 1px solid #06a77d;
+}
+
+@media screen and (max-width: 991px) {
+  .lesson {
+    border-left: none;
+  }
+}
+
+

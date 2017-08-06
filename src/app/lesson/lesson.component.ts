@@ -32,6 +32,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   @ViewChild('lesson_text') div_text;
   @ViewChild('input_answer') input;
   @ViewChild('hangman') hangman;
+  @ViewChild('letters') letters;
   @ViewChild('answer') answer_array;
   @ViewChild('available') available_array;
   @ViewChild('used_letters') used_letters_node;
@@ -82,7 +83,7 @@ export class LessonComponent implements OnInit, OnDestroy {
         if (this.current_question.type == 'hangman') {
           this.used_letters_node.nativeElement.innerHTML = '';
           for (let i = 0; this.current_question.correct_answer.length > i; i++) {
-            this.hangman.nativeElement.children[i].innerHTML = '_';
+            this.letters.nativeElement.children[i].innerHTML = '_';
           }
         }
         this.index++;
@@ -141,23 +142,31 @@ export class LessonComponent implements OnInit, OnDestroy {
     let counter = 0;
     this.current_question.correct_answer.forEach((e, i) => {
       if (e == form.value.hangman) {
-        this.hangman.nativeElement.children[i].innerHTML = e;
-        this.correct_guesses++;
-        counter++;
-        if (this.used_letters.indexOf(e) == -1) {
-          this.used_letters.push(e);
-          let p = document.createElement('p');
-          p.innerHTML = e;
-          this.hangman.nativeElement.nextElementSibling.appendChild(p);
+        if (this.letters.nativeElement.children[i].innerHTML != e) {
+          this.letters.nativeElement.children[i].innerHTML = e;
+          this.correct_guesses++;
+          counter++;
+          if (this.used_letters.indexOf(e) == -1) {
+            this.used_letters.push(e);
+            let span = document.createElement('span');
+            span.style.color = 'green';
+            span.style.display = 'inline';
+            span.style.marginLeft = "4px";
+            span.innerHTML = e;
+            this.hangman.nativeElement.nextElementSibling.appendChild(span);
+          }
         }
       }
     });
     if (!counter) {
       if (this.used_letters.indexOf(form.value.hangman) == -1) {
         this.used_letters.push(form.value.hangman);
-        let p = document.createElement('p');
-        p.innerHTML = form.value.hangman;
-        this.hangman.nativeElement.nextElementSibling.appendChild(p);
+        let span = document.createElement('span');
+        span.style.color = 'red';
+        span.style.display = 'inline';
+        span.style.marginLeft = "4px";
+        span.innerHTML = form.value.hangman;
+        this.hangman.nativeElement.nextElementSibling.appendChild(span);
       }
     }
     form.controls['hangman'].reset();

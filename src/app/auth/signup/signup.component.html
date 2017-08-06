@@ -1,8 +1,11 @@
 <div class="row">
   <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+    <p class="text-center">Kako biste mogli koristiti stranicu, potrebno se ulogirati!</p>
+    <p #errorMessage class="text-center error-message"></p>
     <form (ngSubmit)="onSignup(f)" #f="ngForm">
       <div class="form-group">
-        <input type="email" id="email" name="email" placeholder="Email" ngModel class="form-control">
+        <input type="email" id="email" name="email" placeholder="Email" required ngModel
+               class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
       </div>
       <div class="form-group">
         <input
@@ -10,8 +13,9 @@
           id="name"
           name="name"
           placeholder="Ime"
+          required
           ngModel
-          class="form-control">
+          class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
       </div>
       <div class="form-group">
         <input
@@ -20,7 +24,8 @@
           name="surname"
           placeholder="Prezime"
           ngModel
-          class="form-control">
+          required
+          class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
       </div>
       <div class="form-group">
         <input
@@ -29,9 +34,10 @@
           name="password"
           placeholder="Lozinka"
           ngModel
-          class="form-control">
+          required
+          class="col-xs-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
       </div>
-      <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Sign Up</button>
+      <button class="btn col-xs-4 col-xs-offset-4" type="submit" [disabled]="!f.valid">Registriraj se</button>
     </form>
   </div>
 </div>

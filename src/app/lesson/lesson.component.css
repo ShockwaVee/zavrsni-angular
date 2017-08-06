@@ -1,11 +1,19 @@
 button {
-  border-radius: 0px;
-  border: none;
+  margin-top: 8px;
+  padding: 12px;
   font-size: 20px;
-  font-variant: small-caps;
+  font-variant: all-small-caps;
   font-weight: bold;
-  display: block;
-  margin: 0 auto;
+  color: white !important;
+  background-color: #ffbf00;
+  border-radius: 0;
+  border: none;
+  transition: background-color 200ms ease-in;
+}
+
+button:hover {
+  background-color: #ffe007;
+  color: white;
 }
 
 p {
@@ -23,6 +31,7 @@ img {
 .keyboard button {
   float: left;
   border: 1px solid #d5d5d5;
+  color: #343434 !important;
   background: #f3f3f3;
   padding: 8px 15px;
   border-radius: 5px;
@@ -34,7 +43,29 @@ img {
 }
 
 .keyboard {
-  margin: 8px;
+  margin: 8px auto;
+  display: block;
+  width: 164px;
+}
+
+input[type="text"] {
+  margin-top: 32px;
+}
+
+.letter-wrapper {
+  max-width: 100%;
+  width: auto !important;
+  display: inline-block;
+}
+
+#hangman .letter {
+  font-size: 32px;
+  margin-right: 15px;
+}
+
+#hangman #check {
+  margin-top: 21px;
+  margin-left: 8px;
 }
 
 .keyboard:after {
@@ -43,11 +74,68 @@ img {
   display: block;
 }
 
-#hangman span {
-  margin-right: 15px;
-  font-size: 22px;
-}
-
 .border {
   border: 1px solid black;
+}
+
+#quiz .img-responsive {
+  margin: 0 auto;
+  width: 500px;
+  transform: rotate(4deg);
+  margin-top: 25px;
+  border: 2px solid #ffbf00;
+}
+
+#quiz {
+  font-family: 'Raleway', sans-serif;
+  color: #343434;
+}
+
+h1 {
+  font-family: 'Raleway', sans-serif;
+  color: #064287;
+}
+
+#lesson_text {
+  font-family: 'Merriweather', sans-serif;
+  color: #343434;
+  line-height: 27px;
+}
+
+#lesson {
+  padding-bottom: 25px;
+}
+
+#finish .img-responsive {
+  margin: 20px auto;
+  width: 350px;
+}
+
+.element-animation{
+  animation: animationFrames linear 3s infinite;
+  transform-origin: 50% 50%;
+}
+
+@keyframes animationFrames{
+  0% {
+    transform:  translate(0px,0px)  rotate(0deg) ;
+  }
+  15% {
+    transform:  translate(-25px,0px)  rotate(-5deg) ;
+  }
+  30% {
+    transform:  translate(20px,0px)  rotate(3deg) ;
+  }
+  45% {
+    transform:  translate(-15px,0px)  rotate(-3deg) ;
+  }
+  60% {
+    transform:  translate(10px,0px)  rotate(2deg) ;
+  }
+  75% {
+    transform:  translate(-5px,0px)  rotate(-1deg) ;
+  }
+  100% {
+    transform:  translate(0px,0px)  rotate(0deg) ;
+  }
 }

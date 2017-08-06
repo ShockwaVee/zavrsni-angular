@@ -2,13 +2,13 @@
   <div class="col-md-12 center-block">
     <div [hidden]="state!='lesson'" id="lesson">
       <h1 class="text-center">{{current_lesson.name | capitalize}}</h1>
-      <div #lesson_text></div>
-      <button class="btn btn-primary" (click)="onQuizActivate()">započni kviz</button>
+      <div id="lesson_text" #lesson_text></div>
+      <button class="btn center-block" (click)="onQuizActivate()">započni kviz</button>
     </div>
-    <div *ngIf="state==='quiz'">
+    <div id="quiz" *ngIf="state==='quiz'">
       <form class="center-block" (ngSubmit)="onSubmit(f)" #f="ngForm">
-        <p class="text-center">{{current_question.question}}</p>
-        <span *ngIf="incorrect" class="help-block text-center">Odgovor je netočan, pokušajte ponovo!</span>
+        <p id="question" class="text-center">{{current_question.question}}</p>
+        <span *ngIf="incorrect" class="help-block text-center">Odgovor je netočan, pokušaj ponovo!</span>
         <div *ngIf="current_question.type == 'radio'">
           <div class="answers form-group"
                *ngFor="let answer of current_question.answers; let i = index">
@@ -18,7 +18,8 @@
           </div>
         </div>
         <div *ngIf="current_question.type == 'input'">
-          <input ngModel name="question" placeholder="Upiši odgovor ovdje" type="text" class="form-control"
+          <input ngModel name="question" placeholder="Upiši odgovor ovdje" type="text"
+                 class="form-control"
                  #input_answer required>
           <hr>
           <div class="keyboard">
@@ -29,25 +30,36 @@
         </div>
         <div *ngIf="current_question.type=='hangman' ">
           <div #hangman id="hangman" class="col-xs-12">
-            <span *ngFor="let letter of current_question.correct_answer">_</span>
-            <input #input_answer type="text" maxlength="1" placeholder="Upiši slovo ovdje" ngModel name="hangman">
+            <div class="col-xs-12" style="text-align: center">
+              <div #letters class="letter-wrapper">
+                <span class="letter" *ngFor="let letter of current_question.correct_answer">_</span>
+              </div>
+            </div>
+            <div class="row">
+              <input #input_answer type="text" maxlength="1" class="col-xs-4 col-xs-offset-2"
+                     placeholder="Upiši slovo ovdje" ngModel name="hangman">
+              <button type="button" id="check" class="col-xs-3 btn" (click)="onCheck(f)">Provjeri</button>
+            </div>
             <div class="keyboard">
               <button type="button" (click)="onEnterKey('æ', f)">Æ</button>
               <button type="button" (click)="onEnterKey('ø', f)">Ø</button>
               <button type="button" (click)="onEnterKey('å', f)">Å</button>
             </div>
-            <button type="button" (click)="onCheck(f)">Provjeri</button>
           </div>
+          <h4>Iskorištena slova: </h4>
           <div #used_letters class="used-letters"></div>
         </div>
         <div *ngIf="current_question.type=='guess' ">
           <img class="img-responsive"
                src="{{current_question.image}}" alt="">
-          <input #input_answer placeholder="Ovdje upiši odgovor" type="text" name="question" ngModel required/>
-          <div class="keyboard">
-            <button type="button" (click)="onEnterKey('æ', f)">Æ</button>
-            <button type="button" (click)="onEnterKey('ø', f)">Ø</button>
-            <button type="button" (click)="onEnterKey('å', f)">Å</button>
+          <input #input_answer placeholder="Ovdje upiši odgovor" class="form-control" type="text"
+                 name="question" ngModel required/>
+          <div class="col-xs-12">
+            <div class="keyboard center-block">
+              <button type="button" (click)="onEnterKey('æ', f)">Æ</button>
+              <button type="button" (click)="onEnterKey('ø', f)">Ø</button>
+              <button type="button" (click)="onEnterKey('å', f)">Å</button>
+            </div>
           </div>
         </div>
         <div *ngIf="current_question.type=='rearrange' ">
@@ -60,18 +72,20 @@
             </div>
           </div>
         </div>
-
-        <button [disabled]="shouldDisable(f)" type="submit" *ngIf="index != current_lesson.questions.length - 1"
-                class="btn btn-primary">sljedeće pitanje
-        </button>
-        <button [disabled]="shouldDisable(f)" type="submit" *ngIf="index == current_lesson.questions.length - 1"
-                class="btn btn-primary">kraj
-        </button>
+        <div class="col-xs-12">
+          <button [disabled]="shouldDisable(f)" type="submit" *ngIf="index != current_lesson.questions.length - 1"
+                  class="btn center-block">sljedeće pitanje
+          </button>
+          <button [disabled]="shouldDisable(f)" type="submit" *ngIf="index == current_lesson.questions.length - 1"
+                  class="btn center-block">kraj
+          </button>
+        </div>
       </form>
     </div>
-    <div *ngIf="state==='finished'">
-      <h2>Bravo, uspješno si riješio lekciju! :)</h2>
-      <button class="btn btn-primary" *ngIf="next_lesson" (click)="onNextLesson()">sljedeća lekcija</button>
+    <div id="finish" *ngIf="state==='finished'">
+      <h2 class="text-center">Bravo, uspješno si riješio lekciju!</h2>
+      <img src="/assets/joke.png" class="img-responsive element-animation" alt="">
+      <button class="btn center-block" *ngIf="next_lesson" (click)="onNextLesson()">sljedeća lekcija</button>
     </div>
   </div>
 </div>

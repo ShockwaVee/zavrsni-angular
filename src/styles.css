@@ -2,7 +2,7 @@
 .pronounce{
   text-decoration: underline;
   cursor: pointer;
-  color: #2F538C;
+  color: #ffbf00;
 }
 #lesson p:not(.help-block){
   font-size: 18px;

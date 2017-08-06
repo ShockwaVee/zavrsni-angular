@@ -18,4 +18,6 @@ export class AppComponent implements OnInit {
       authDomain: "zavrsni-rad-f80a0.firebaseapp.com",
     });
   }
+
+  /*forvitni - znatitelja, fyrsta - pocetak, fregna - uciti, hugr - misao, skilja - razumjeti, spakr - mudar, tala, maela - pricati*/
 }

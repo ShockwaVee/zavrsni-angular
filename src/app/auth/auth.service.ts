@@ -8,12 +8,14 @@ import {Router} from "@angular/router";
 import "rxjs/Rx";
 import {Lesson} from "../lesson/lesson.model";
 import {Question} from "../lesson/question.model";
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class AuthService {
   token: string;
   uid: string;
   admin_rights: boolean;
+  error_message = new Subject<string>();
 
   constructor(private lessonService: LessonService, private http: Http, private userService: UserService, private router: Router) {
   }
@@ -32,14 +34,18 @@ export class AuthService {
         this.http.put(`https://zavrsni-rad-f80a0.firebaseio.com/users/${response.uid}.json?auth=${this.token}`, post_object).subscribe();
         this.signInUser(email, password);
       });
-    }).catch((error) => console.log(error));
+    }).catch((error: Error) => {
+      this.error_message.next(error['code']);
+    });
   }
 
   signInUser(email: string, password: string) {
     firebase.auth().signInWithEmailAndPassword(email, password).then(response => firebase.auth().currentUser.getIdToken().then((token: string) => {
       this.token = token;
       this.getUserFromDB(response.uid);
-    })).catch(error => console.log(error));
+    })).catch(error => {
+      this.error_message.next(error['code']);
+    });
   }
 
   getToken() {
@@ -54,7 +60,7 @@ export class AuthService {
   }
 
   getUserFromDB(uid: string) {
-    const headers = new Headers({'Access-Control-Expose-Headers' : 'Authorization'});
+    const headers = new Headers({'Access-Control-Expose-Headers': 'Authorization'});
     this.http.get(`https://zavrsni-rad-f80a0.firebaseio.com/users/${uid}.json?auth=${this.token}`, {headers: headers}).subscribe((response) => {
       let lessonList: Array<Lesson> = [];
       let data = response.json();

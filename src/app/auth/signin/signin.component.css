@@ -1,0 +1,47 @@
+input[type="email"], input[type="password"] {
+  padding: 10px;
+  border: none;
+  margin-bottom: 12px;
+  background: #e4fce1;
+  transition: background 0.3s;
+  border-radius: 3px;
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+  background: #c2ffb9;
+}
+
+* {
+  font-family: "Raleway", sans-serif;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 18px;
+}
+
+button {
+  margin-top: 8px;
+  padding: 12px;
+  font-size: 20px;
+  font-variant: all-small-caps;
+  font-weight: bold;
+  background-color: #ffbf00;
+  border-radius: 0px;
+  border: none;
+  transition: background-color 200ms ease-in;
+  color: white;
+}
+
+button:hover {
+  background-color: #ffe007;
+  color: white;
+}
+
+.error-message {
+  color: #e74c3c !important;
+  font-weight: bold;
+}
