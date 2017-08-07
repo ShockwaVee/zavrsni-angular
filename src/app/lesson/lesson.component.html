@@ -67,8 +67,9 @@
           <div #answer></div>
           <hr>
           <div #available>
-            <div *ngFor="let segment of current_question.shuffled_array" (click)="onPush($event)"
-                 style="border: 1px solid black"> {{segment}}
+            <div *ngFor="let segment of current_question.shuffled_array" (click)="onPush($event)" [style.transform]="position ? 'rotate(-3deg)' : 'rotate(4deg)'"
+                 style="border: 3px solid #ffbf00;display: inline-block;padding: 10px 20px;font-size: 24px;font-variant: small-caps;font-weight: bold;cursor: pointer;margin-right: 28px;">
+              {{segment}}
             </div>
           </div>
         </div>

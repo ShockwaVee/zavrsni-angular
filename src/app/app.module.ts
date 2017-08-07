@@ -21,6 +21,7 @@ import {AuthGuardService} from "./auth/auth-guard.service";
 import {AdminPanelComponent} from "./auth/admin/admin-panel.component";
 import {LessonAddComponent} from "./auth/admin/lesson-add/lesson-add.component";
 import {AdminGuardService} from "./auth/admin/admin-guard.service";
+import { HomeComponent } from './core/home/home.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {AdminGuardService} from "./auth/admin/admin-guard.service";
     SigninComponent,
     SignupComponent,
     AdminPanelComponent,
-    LessonAddComponent
+    LessonAddComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

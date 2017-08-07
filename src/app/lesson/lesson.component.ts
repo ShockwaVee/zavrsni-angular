@@ -28,6 +28,7 @@ export class LessonComponent implements OnInit, OnDestroy {
   used_letters: Array<string> = [];
   correct_guesses: number = 0;
   unlisten: Array<any> = [];
+  position: Boolean = false;
 
   @ViewChild('lesson_text') div_text;
   @ViewChild('input_answer') input;
@@ -186,7 +187,15 @@ export class LessonComponent implements OnInit, OnDestroy {
     div.innerHTML = e.target.innerText;
     this.attempted_solve.push(e.target.innerText);
     e.target.remove();
-    this.renderer.setStyle(div, 'border', '1px solid black');
+    this.renderer.setStyle(div, 'border', '3px solid #ffbf00');
+    this.renderer.setStyle(div, 'display', 'inline-block');
+    this.renderer.setStyle(div, 'padding', '10px 20px');
+    this.renderer.setStyle(div, 'font-size', '24px');
+    this.renderer.setStyle(div, 'font-variant', 'small-caps');
+    this.renderer.setStyle(div, 'font-weight', 'bold');
+    this.renderer.setStyle(div, 'cursor', 'pointer');
+    this.renderer.setStyle(div, 'margin-right', '28px');
+    this.renderer.setStyle(div, 'transform', 'rotate(' + this.getRandomInt() + 'deg)');
     this.unlisten.push(this.renderer.listen(div, 'click', (event) => this.onPop(event)));
     this.answer_array.nativeElement.appendChild(div);
     if (this.current_question.correct_answer.length == this.attempted_solve.length) {
@@ -208,7 +217,15 @@ export class LessonComponent implements OnInit, OnDestroy {
     div.innerHTML = event.target.innerText;
     this.attempted_solve.splice(this.attempted_solve.indexOf(event.target.innerText), 1);
     event.target.remove();
-    this.renderer.setStyle(div, 'border', '1px solid black');
+    this.renderer.setStyle(div, 'border', '3px solid #ffbf00');
+    this.renderer.setStyle(div, 'display', 'inline-block');
+    this.renderer.setStyle(div, 'padding', '10px 20px');
+    this.renderer.setStyle(div, 'font-size', '24px');
+    this.renderer.setStyle(div, 'font-variant', 'small-caps');
+    this.renderer.setStyle(div, 'font-weight', 'bold');
+    this.renderer.setStyle(div, 'cursor', 'pointer');
+    this.renderer.setStyle(div, 'margin-right', '28px');
+    this.renderer.setStyle(div, 'transform', 'rotate(' + this.getRandomInt() + 'deg)');
     this.renderer.listen(div, 'click', (event) => this.onPush(event));
     this.available_array.nativeElement.appendChild(div);
   }
@@ -219,4 +236,13 @@ export class LessonComponent implements OnInit, OnDestroy {
     this.subscription_lesson.unsubscribe();
   }
 
+  getRandomInt() {
+    let number = Math.floor(Math.random() * (5 - (1) + 1)) + 1;
+    if (Math.random() < 0.5) return number * (-1);
+    else return number;
+  }
+
+  getState(){
+    if (Math.random() < 0.5) this.position = true;
+  }
 }

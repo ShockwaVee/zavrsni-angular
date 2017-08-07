@@ -45,3 +45,12 @@ button:hover {
   color: #e74c3c !important;
   font-weight: bold;
 }
+
+img {
+  width: 30%;
+  padding-bottom: 25px;
+}
+
+.img-responsive {
+  margin: 0 auto;
+}

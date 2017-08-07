@@ -37,7 +37,7 @@ a:after {
 }
 
 a:hover {
-  color: #3166d2!important;
+  color: #3166d2 !important;
 }
 
 a.active:after, a:hover:after {
@@ -47,4 +47,18 @@ a.active:after, a:hover:after {
   display: block;
   background-color: #3166d2;
   margin-top: 6px;
+}
+
+img {
+  width: 100px;
+}
+
+span.navbar-brand{
+  padding: 5px 10px;
+}
+
+@media screen and (max-width: 768px){
+  img {
+    width: 80px;
+  }
 }

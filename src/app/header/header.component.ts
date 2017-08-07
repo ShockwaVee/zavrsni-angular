@@ -1,5 +1,4 @@
-import {Component, OnInit} from "@angular/core";
-import {UserService} from "../user/user.service";
+import {Component, OnInit, Renderer2, ViewChild} from "@angular/core";
 import {AuthService} from "../auth/auth.service";
 
 @Component({
@@ -9,8 +8,12 @@ import {AuthService} from "../auth/auth.service";
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private userService: UserService, private authService: AuthService) {
+  isOpen: boolean = false;
+
+  constructor(private authService: AuthService, private renderer: Renderer2) {
   }
+
+  @ViewChild('dropdown') dropdown;
 
   ngOnInit() {
   }
@@ -25,5 +28,16 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.authService.logOutUser();
+  }
+
+  onToggleDropdown() {
+    if (this.isOpen) {
+      this.renderer.removeClass(this.dropdown.nativeElement, 'in');
+      this.isOpen = false;
+    }
+    else {
+      this.renderer.addClass(this.dropdown.nativeElement, 'in');
+      this.isOpen = true;
+    }
   }
 }

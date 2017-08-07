@@ -1,0 +1,15 @@
+<div class="jumbotron">
+  <div *ngIf="!isLoggedIn()">
+    <h1>Dobro došli na Spakr,</h1>
+    <p>online platformu za učenje norveškog jezika!</p>
+  </div>
+  <div *ngIf="isLoggedIn()">
+    <h1>Pozdrav {{userService.current_user.name}}!</h1>
+    <p>Jesi li spreman za još učenja?</p>
+  </div>
+</div>
+
+<p>Ako želiš koristiti ovu stranicu za učenje jezika, morat ćeš se ulogirati. Registracija je besplatna i neće ti uzeti
+  previše vremena!</p>
+<p>Zato klikni gore na registraciju i započni s učenjem norveškog!</p>
+
